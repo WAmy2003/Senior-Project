@@ -1,0 +1,91 @@
+/* 左側目錄樣式 */
+aside {
+    width: 17%;
+    height: 100vh; /* 固定全高 */
+    position: fixed; /* 固定在左側 */
+    top: 0;
+    left: 0; /* 確保對齊螢幕左側 */
+    background-color: #f7f5e6;
+    font-weight: bold;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1); /* 添加陰影 */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-family: Arial, sans-serif;
+}
+
+nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    width: 100%; /* 使項目占滿側邊欄寬度 */
+    text-align: center;
+}
+
+nav ul li {
+    margin: 30px 0;
+}
+
+nav ul li a {
+    color: #333a56;
+    text-decoration: none;
+    font-size: 1.2em;
+}
+
+nav ul li a:hover {
+    text-decoration: underline;
+    text-underline-offset: 5px;
+}
+
+/* 內容區域樣式 */
+.portfolio-container {
+    margin-left: 17%; /* 避開左側的目錄欄 */
+    padding: 20px;
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #333a56;
+}
+
+/* 表格樣式 */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+thead {
+    background-color: #f0f0f0;
+}
+
+th, td {
+    padding: 12px 15px;
+    text-align: center;
+    border: 1px solid #ddd;
+}
+
+tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+tbody tr:hover {
+    background-color: #f1f1f1;
+}
+
+.positive {
+    color: green;
+}
+
+.negative {
+    color: red;
+}
+
+.rating {
+    background-color: #e6f7e6;
+    border-radius: 4px;
+    padding: 5px 10px;
+    font-weight: bold;
+}
