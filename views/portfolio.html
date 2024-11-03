@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio Table</title>
+    <link rel="stylesheet" href="../public/css/style2.css">
+</head>
+<body>
+    <div class="portfolio-container">
+        <aside>
+            <nav>
+                <ul>
+                    <li><a href="#">About us</a></li>
+                    <li><a href="index.html">專題成果展示</a></li>
+                    <li><a href="portfolio.html">投資組合</a></li>
+                    <li><a href="#">目錄四</a></li>
+                </ul>
+            </nav>
+        </aside>
+        <h1>My Portfolio</h1>
+        <table>
+            <thead>
+                <tr>
+                    <th>公司名稱</th>
+                    <th>股票代號</th>
+                    <th>Price</th>
+                    <th>Change</th>
+                    <th>Change %</th>
+                    <th>Volume</th>
+                    <th>52W Range</th>
+                    <th>Quant Ratings</th>
+                    <th>SA Analyst Ratings</th>
+                    <th>Wall Street Ratings</th>
+                </tr>
+            </thead>
+            <tbody id="portfolioTable">
+                <!-- JavaScript 會自動插入資料 -->
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        // 股票代號和公司名稱的資料
+        const stock_ids = [
+            '2330', '2317', '2454', '2308', '2382', '2891', '2881', '2303', '3711', '2882',
+            '2886', '2412', '2884', '1216', '2885', '3034', '2357', '2890', '2892', '3231',
+            '2345', '3008', '2327', '5880', '2002', '2880', '2379', '1303', '2883', '6669',
+            '1101', '2887', '3037', '2301', '3017', '1301', '4938', '2207', '3661', '2603',
+            '2395', '3045', '5876', '1326', '4904', '2912', '1590', '5871', '6505', '2408'
+        ];
+        
+        const company_names = [
+            '台積電', '鴻海', '聯發科', '台達電', '廣達', '中信金', '富邦金', '聯華電子', '日月光投控', '國泰金',
+            '兆豐金', '中華電', '玉山金', '統一', '元大金', '聯詠', '華碩', '永豐金', '第一金', '緯創',
+            '智邦', '大立光', '國巨', '合庫金', '中鋼', '華南金', '瑞昱', '南亞', '凱基', '緯穎',
+            '台泥', '台新金', '欣興', '光寶', '奇鋐', '台塑', '和碩', '和泰', '世芯', '長榮',
+            '研華', '台灣大哥大', '上海商銀', '台化', '遠傳', '統一超', '亞德客', '中租-KY', '台塑', '南亞科'
+        ];
+
+        // 生成並插入表格資料的函數
+        function populateTable() {
+            const tableBody = document.getElementById('portfolioTable');
+            let rows = '';
+
+            for (let i = 0; i < stock_ids.length; i++) {
+                rows += `
+                    <tr>
+                        <td>${company_names[i]}</td>
+                        <td>${stock_ids[i]}</td>
+                        <td>—</td>
+                        <td>—</td>
+                        <td>—</td>
+                        <td>—</td>
+                        <td>—</td>
+                        <td>—</td>
+                        <td>—</td>
+                        <td>—</td>
+                    </tr>
+                `;
+            }
+            tableBody.innerHTML = rows;
+        }
+
+        // 呼叫函數來填充表格
+        populateTable();
+    </script>
+</body>
+</html>
