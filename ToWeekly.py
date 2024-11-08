@@ -34,7 +34,8 @@ for stock_id in stock_ids:
             'Bollinger_Middle': 'mean',  # Bollinger_Middle 取平均值
             'Bollinger_Lower': 'mean',  # Bollinger_Lower 取平均值
             'CK_Index': 'mean',  # CK_Index 取平均值
-            'sentiment_score': 'mean'  # sentiment_score 取平均值
+            'sentiment_score': 'mean',  # sentiment_score 取平均值
+            'close': 'last'  # close 收盤價取每週的最後一個值
         }).reset_index()
 
         # 檢查轉換後的結果
