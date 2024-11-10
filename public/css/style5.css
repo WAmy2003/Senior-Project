@@ -1,0 +1,254 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    /*
+    background-color: #D2D5F0;
+    */
+    height: 80px;
+    width: 100%;
+    position: fixed; 
+    background-color: black;
+}
+
+header h1 {
+    position: fixed;
+    left: 90px;
+    top: 0;
+    line-height: 80px;
+    /*
+    background-image: url(icon\logo.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 120px;
+    text-indent: -9999px;
+    */
+}
+
+nav ul {
+    position: fixed;
+    right: 3.5vw;
+    top: 0;
+    line-height: 80px;
+}
+
+nav ul li {
+    display: inline;
+    margin: 2vw; /* vw指的是相對視窗的比例 */
+}
+
+nav ul li a {
+    color: white;
+    text-decoration: none;
+    font-size: 1em;
+}
+
+nav ul li a:hover {
+    text-decoration: underline; /* 鼠標移至目錄文字下方出現底線 */
+    text-underline-offset: 5px;
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: white;
+}
+
+.question {
+    text-align: center; /* 置中文字於中間 */
+    display: flex;
+    justify-content: center; /* 水平置中 */
+    align-items: center; /* 垂直置中 */
+    height: 40vh; /* 讓整個區塊在頁面中置中 */
+}
+
+.question p {
+    margin: 0; /* 移除段落的預設外邊距 */
+    font-size: 1.3em; /* 調整字體大小 */
+    line-height: 2em; /* 增加行距 */
+}
+
+
+.statement {
+    background-color: antiquewhite;
+    height: 50vh;
+    background-image: url("C:/Users/yunch/OneDrive/文件/網站架設/Senior-Project/image/back.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.statement h2 {
+    font-size: 60px;
+    color: white;
+    letter-spacing: 1px;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    margin: 10px 0;
+}
+
+.statement p {
+    color: white;
+    font-size: 20px;
+    margin: 10px 0;
+    letter-spacing: 1px;
+}
+
+/* 讓 <h2> 標題置中 */
+h2 {
+    font-size: 2em;
+    text-align: center;
+    margin-top: 60px;
+    margin-bottom: 20px; /* 與下方 section 保持間距 */
+}
+
+/* 讓 section 裡的 3 個區塊排列並保持間距 */
+.tool {
+    display: flex;
+    justify-content: space-around; /* 讓區塊之間有均等的間距 */
+    padding: 50px; /* 增加區塊與 section 邊緣的間距 */
+    overflow: hidden; /* 防止線條在滾動時移動 */
+}
+
+.tool div {
+    flex: 1;
+    text-align: center; /* 讓每個區塊內的文字置中 */
+    margin: 0 10px; /* 調整每個區塊之間的間距 */
+    font-size: 1.25em;
+    border-right: 2.5px solid gray; /* 添加右邊框 */
+}
+
+.tool div:last-child {
+    border-right: none; /* 移除最後一個區塊的右邊框 */
+}
+
+.end {
+    text-align: center; /* 置中文字於中間 */
+    height: 15vh; /* 讓整個區塊在頁面中置中 */
+    color: black;
+    letter-spacing: 1px;
+    letter-spacing: 1px;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    margin: 0; /* 移除段落的預設外邊距 */
+    font-size: 1.3em; /* 調整字體大小 */
+    line-height: 2.2em; /* 增加行距 */
+    padding-bottom: 25vh;
+    padding-top: 15px;
+}
+
+.end h4 {
+    margin: 25px 0;
+    font-size: 1.7em;
+}
+
+
+/*以下是頁尾設計*/
+
+.footer {
+    background: black;
+    color: white;
+    padding: 50px 0;
+}
+
+.footer-content {
+    display: flex;
+    justify-content: space-evenly;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding-top: 30px;
+}
+
+.footer-column h4 a {
+    text-decoration: none;
+    color: white;
+} 
+
+.footer-column {
+    flex: 1;
+    min-width: 200px;
+    text-align: left;
+}
+
+.center-column {
+    flex: 1.5;
+    text-align: left;
+}
+
+.footer-column h4 {
+    font-size: 1em;
+    margin-bottom: 10px;
+}
+
+.footer-column ul {
+    list-style: none;
+    padding: 0;
+}
+
+.footer-column ul li {
+    margin: 5px 0;
+}
+
+.footer-column ul li a {
+    color: white;
+    text-decoration: none;
+}
+
+.footer-column ul li a:hover {
+    text-decoration: underline;
+}
+
+.newsletter-signup {
+    text-align: left;
+    max-width: 1200px;
+    margin: 30px auto 0; /* 將整體往下移 */
+    padding-top: 20px;
+}
+
+.newsletter-signup h4 {
+    font-size: 18px;
+    margin-bottom: 8px;
+}
+
+.newsletter-signup input[type="email"] {
+    padding: 10px;
+    width: 17vw;
+    border: none;
+    border-radius: 2px;
+    margin-right: 10px;
+    margin-top: 10px;
+}
+
+.newsletter-signup button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 2px;
+    background: #5A717A;
+    color: white;
+    cursor: pointer;
+    margin-top: 15px;
+    font-size: 10px;
+}
+
+.newsletter-signup button:hover {
+    background: #28A9A5;
+}
+
+.footer-bottom {
+    text-align: center;
+    padding-top: 80px;
+    font-size: 12px;
+    color: #d1d1d1;
+}
+
+.footer-bottom a {
+    color: #d1d1d1;
+    text-decoration: none;
+}
+
+
+
