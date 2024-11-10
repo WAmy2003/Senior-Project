@@ -10,7 +10,7 @@ header {
     height: 80px;
     width: 100%;
     position: fixed; 
-    background-color: black;
+    background-color: rgba(35, 28, 26, 0.9);
 }
 
 header h1 {
@@ -50,10 +50,17 @@ nav ul li a:hover {
     text-underline-offset: 5px;
 }
 
-h1 {
+.topic {
+    background-color: aliceblue;
+    height: 30vh;
+    padding-top: 60px;
+}
+
+.topic h1 {
     text-align: center;
     margin-bottom: 20px;
     color: white;
+    padding-top: 60px;
 }
 
 .question {
