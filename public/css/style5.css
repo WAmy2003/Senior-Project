@@ -9,7 +9,7 @@ header {
     */
     height: 80px;
     width: 100%;
-    position: fixed; 
+    position: fixed;
     background-color: #383130;
 }
 
@@ -37,7 +37,8 @@ nav ul {
 
 nav ul li {
     display: inline;
-    margin: 2vw; /* vw指的是相對視窗的比例 */
+    margin: 2vw;
+    /* vw指的是相對視窗的比例 */
 }
 
 nav ul li a {
@@ -47,7 +48,8 @@ nav ul li a {
 }
 
 nav ul li a:hover {
-    text-decoration: underline; /* 鼠標移至目錄文字下方出現底線 */
+    text-decoration: underline;
+    /* 鼠標移至目錄文字下方出現底線 */
     text-underline-offset: 5px;
 }
 
@@ -65,24 +67,31 @@ nav ul li a:hover {
 }
 
 .question {
-    text-align: center; /* 置中文字於中間 */
+    text-align: center;
+    /* 置中文字於中間 */
     display: flex;
-    justify-content: center; /* 水平置中 */
-    align-items: center; /* 垂直置中 */
-    height: 40vh; /* 讓整個區塊在頁面中置中 */
+    justify-content: center;
+    /* 水平置中 */
+    align-items: center;
+    /* 垂直置中 */
+    height: 40vh;
+    /* 讓整個區塊在頁面中置中 */
 }
 
 .question p {
-    margin: 0; /* 移除段落的預設外邊距 */
-    font-size: 1.3em; /* 調整字體大小 */
-    line-height: 2em; /* 增加行距 */
+    margin: 0;
+    /* 移除段落的預設外邊距 */
+    font-size: 1.3em;
+    /* 調整字體大小 */
+    line-height: 2em;
+    /* 增加行距 */
 }
 
 
 .statement {
     background-color: antiquewhite;
     height: 50vh;
-    background-image: url("C:/Users/yunch/OneDrive/文件/網站架設/Senior-Project/image/back.png");
+    background-image: url("../image/back.png");
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
@@ -112,39 +121,52 @@ h2 {
     font-size: 2em;
     text-align: center;
     margin-top: 60px;
-    margin-bottom: 20px; /* 與下方 section 保持間距 */
+    margin-bottom: 20px;
+    /* 與下方 section 保持間距 */
 }
 
 /* 讓 section 裡的 3 個區塊排列並保持間距 */
 .tool {
     display: flex;
-    justify-content: space-around; /* 讓區塊之間有均等的間距 */
-    padding: 50px; /* 增加區塊與 section 邊緣的間距 */
-    overflow: hidden; /* 防止線條在滾動時移動 */
+    justify-content: space-around;
+    /* 讓區塊之間有均等的間距 */
+    padding: 50px;
+    /* 增加區塊與 section 邊緣的間距 */
+    overflow: hidden;
+    /* 防止線條在滾動時移動 */
 }
 
 .tool div {
     flex: 1;
-    text-align: center; /* 讓每個區塊內的文字置中 */
-    margin: 0 10px; /* 調整每個區塊之間的間距 */
+    text-align: center;
+    /* 讓每個區塊內的文字置中 */
+    margin: 0 10px;
+    /* 調整每個區塊之間的間距 */
     font-size: 1.25em;
-    border-right: 2.5px solid gray; /* 添加右邊框 */
+    border-right: 2.5px solid gray;
+    /* 添加右邊框 */
 }
 
 .tool div:last-child {
-    border-right: none; /* 移除最後一個區塊的右邊框 */
+    border-right: none;
+    /* 移除最後一個區塊的右邊框 */
 }
 
 .end {
-    text-align: center; /* 置中文字於中間 */
-    height: 15vh; /* 讓整個區塊在頁面中置中 */
+    text-align: center;
+    /* 置中文字於中間 */
+    height: 15vh;
+    /* 讓整個區塊在頁面中置中 */
     color: black;
     letter-spacing: 1px;
     letter-spacing: 1px;
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-    margin: 0; /* 移除段落的預設外邊距 */
-    font-size: 1.3em; /* 調整字體大小 */
-    line-height: 2.2em; /* 增加行距 */
+    margin: 0;
+    /* 移除段落的預設外邊距 */
+    font-size: 1.3em;
+    /* 調整字體大小 */
+    line-height: 2.2em;
+    /* 增加行距 */
     padding-bottom: 25vh;
     padding-top: 15px;
 }
@@ -174,7 +196,7 @@ h2 {
 .footer-column h4 a {
     text-decoration: none;
     color: white;
-} 
+}
 
 .footer-column {
     flex: 1;
@@ -213,7 +235,8 @@ h2 {
 .newsletter-signup {
     text-align: left;
     max-width: 1200px;
-    margin: 30px auto 0; /* 將整體往下移 */
+    margin: 30px auto 0;
+    /* 將整體往下移 */
     padding-top: 20px;
 }
 
@@ -257,6 +280,3 @@ h2 {
     color: #d1d1d1;
     text-decoration: none;
 }
-
-
-
