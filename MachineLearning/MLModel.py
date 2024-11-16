@@ -7,77 +7,144 @@ from sklearn.ensemble import RandomForestRegressor
 from xgboost import XGBRegressor
 from sklearn.linear_model import LinearRegression
 
-# Part 1: 整理數據
-# path = 'C:\\Users\\user\\OneDrive\\桌面\\畢業專題\\資料蒐集\\原始數據\\' # 日數據
-path = 'C:\\Users\\user\\OneDrive\\桌面\\畢業專題\\資料蒐集\\原始數據_週\\' # 週數據
-all_files = glob.glob(path + "*.csv")
+def load_and_process_data(path):
+    # 確保路徑格式正確
+    path = os.path.join(path, "*.csv")
+    print(f"搜尋路徑: {path}")
+    
+    # 獲取所有CSV檔案
+    all_files = glob.glob(path)
+    print(f"找到的檔案數量: {len(all_files)}")
+    
+    if len(all_files) == 0:
+        raise ValueError(f"在路徑 {path} 中沒有找到CSV檔案")
+    
+    # 讀取所有檔案
+    df_list = []
+    for filename in all_files:
+        try:
+            stock_id = os.path.basename(filename)[:4]
+            df = pd.read_csv(filename)
+            df['stock_id'] = stock_id
+            df_list.append(df)
+        except Exception as e:
+            print(f"處理檔案 {filename} 時發生錯誤: {e}")
+    
+    # 合併所有數據
+    data = pd.concat(df_list, axis=0, ignore_index=True)
+    data['date'] = pd.to_datetime(data['date'], errors='coerce')
+    data.set_index(['date', 'stock_id'], inplace=True)
+    
+    return data
 
-df_list = []
-for filename in all_files:
-    stock_id = os.path.basename(filename)[:4]
-    df = pd.read_csv(filename)
-    df['stock_id'] = stock_id
-    df_list.append(df)
+def normalize_data(data):
+    columns_to_normalize = ['RSI', 'SMA', 'WMA', 'MACD', 'MACD_Signal', 'KD_K', 'KD_D', 
+                        'Bollinger_Upper', 'Bollinger_Middle', 'Bollinger_Lower']
 
-data = pd.concat(df_list, axis=0, ignore_index=True)
-data['date'] = pd.to_datetime(data['date'], errors='coerce')
-data.set_index(['date', 'stock_id'], inplace=True)
+    # 對於需要重新計算的欄位，將每個欄位標準化
+    for column in columns_to_normalize:
+        min_value = data[column].min()
+        max_value = data[column].max()
+        data[column] = (data[column] - min_value) / (max_value - min_value)
 
-# 定義特徵和目標變數
-features = ['Dealer', 'Foreign_Investor', 'Investment_Trust', 'RSI', 'SMA', 'WMA', 
-            'MACD', 'MACD_Signal', 'KD_K', 'KD_D', 'Bollinger_Upper', 'Bollinger_Middle', 
-            'Bollinger_Lower', 'CK_Index', 'sentiment_score']
-target = 'close'
+    # 將 CK_Index 欄位除以 100
+    data['CK_Index'] = data['CK_Index'] / 100
 
-# Part 2: 分割訓練和測試數據集（按日期分割）
-split_date = '2024-06-01'
-train_data = data[data.index.get_level_values('date') <= split_date]
-test_data = data[data.index.get_level_values('date') > split_date]
-test_data = test_data.copy()
+    return data
 
-# 確認所有股票在兩個數據集中均存在
-train_stock_ids = set(train_data.index.get_level_values('stock_id'))
-test_stock_ids = set(test_data.index.get_level_values('stock_id'))
+def train_and_predict(data, features, target, split_date):
+    # 分割訓練和測試數據集
+    train_data = data[data.index.get_level_values('date') <= split_date]
+    test_data = data[data.index.get_level_values('date') > split_date]
+    test_data = test_data.copy()
+    
+    print(f"訓練數據大小: {train_data.shape}")
+    print(f"測試數據大小: {test_data.shape}")
+    
+    # 基礎模型
+    rf = RandomForestRegressor(n_estimators=100, random_state=42)
+    xgb = XGBRegressor(n_estimators=100, learning_rate=0.1, random_state=42)
+    
+    # 生成元特徵
+    train_meta_features = pd.DataFrame(index=train_data.index)
+    test_meta_features = pd.DataFrame(index=test_data.index)
+    
+    for model, name in zip([rf, xgb], ['rf', 'xgb']):
+        print(f"訓練 {name} 模型...")
+        train_meta_features[name] = cross_val_predict(model, train_data[features], train_data[target], cv=5)
+        model.fit(train_data[features], train_data[target])
+        test_meta_features[name] = model.predict(test_data[features])
+    
+    # 元學習器
+    meta_learner = LinearRegression()
+    meta_learner.fit(train_meta_features, train_data[target])
+    
+    return test_data, test_meta_features, meta_learner
 
-# 基模型：隨機森林和XGBoost
-rf = RandomForestRegressor(n_estimators=100, random_state=42)
-xgb = XGBRegressor(n_estimators=100, learning_rate=0.1, random_state=42)
+def calculate_portfolio_weights(test_data, test_meta_features, meta_learner, risk_free_rate=0.01):
+    # 預測收盤價
+    test_data.loc[:, 'predicted_close'] = meta_learner.predict(test_meta_features)
+    
+    # 計算報酬率
+    test_data.loc[:, 'return'] = test_data['predicted_close'].pct_change()
+    
+    # 去除空值
+    test_data = test_data.dropna(subset=['return'])
+    
+    # 計算夏普比率
+    sharpe_ratio = (test_data['return'].mean() - risk_free_rate) / test_data['return'].std()
+    print(f"投資組合夏普比率: {sharpe_ratio}")
+    
+    # 計算各股票權重
+    weights = (test_data.groupby('stock_id')['return'].mean() / 
+              test_data.groupby('stock_id')['return'].std())
+    weights = weights.dropna()
+    weights[weights < 0] = 0
+    weights = weights / weights.sum()
+    weights = weights.round(4)
+    
+    return weights
 
-# 預測生成新的特徵集
-train_meta_features = pd.DataFrame(index=train_data.index)
-test_meta_features = pd.DataFrame(index=test_data.index)
+def main(isNormalized):
+    # 設定路徑和參數
+    path = 'C:\\Users\\user\\OneDrive\\桌面\\畢業專題\\資料蒐集\\原始數據'
+    features = ['Dealer', 'Foreign_Investor', 'Investment_Trust', 
+                'RSI', 'SMA', 'WMA', 'MACD', 'MACD_Signal', 
+                'KD_K', 'KD_D', 'Bollinger_Upper', 'Bollinger_Middle', 
+                'Bollinger_Lower', 'CK_Index', 'sentiment_score']
+    target = 'close'
+    split_date = '2024-06-01'
+    
+    try:
+        # Part 1: 載入和處理數據
+        print("開始載入數據...")
+        data = load_and_process_data(path)
 
-for model, name in zip([rf, xgb], ['rf', 'xgb']):
-    train_meta_features[name] = cross_val_predict(model, train_data[features], train_data[target], cv=5)
-    model.fit(train_data[features], train_data[target])
-    test_meta_features[name] = model.predict(test_data[features])
+        if isNormalized == True:
+            data = normalize_data(data)
+        
+        # 訓練模型和預測
+        print("開始訓練模型...")
+        test_data, test_meta_features, meta_learner = train_and_predict(
+            data, features, target, split_date)
+        
+        # 計算投資組合權重
+        print("計算投資組合權重...")
+        weights = calculate_portfolio_weights(test_data, test_meta_features, meta_learner)
+        
+        # 輸出結果
+        result = weights.to_frame(name='investment_weight')
+        print("\n總權重:", weights.sum())
+        print("\n投資權重結果:")
+        print(result)
+        
+        # # 儲存結果
+        # output_path = os.path.join(os.path.dirname(path), 'portfolio_weights.csv')
+        # result.to_csv(output_path)
+        # print(f"\n結果已儲存至: {output_path}")
+        
+    except Exception as e:
+        print(f"程式執行過程中發生錯誤: {e}")
 
-# 元學習器：線性回歸
-meta_learner = LinearRegression()
-meta_learner.fit(train_meta_features, train_data[target])
-
-# 使用.loc來避免警告
-test_data.loc[:, 'predicted_close'] = meta_learner.predict(test_meta_features)
-
-# 計算報酬率，使用.loc避免警告
-test_data.loc[:, 'return'] = test_data['predicted_close'].pct_change()
-
-# 去除空值以避免空結果
-test_data = test_data.dropna(subset=['return'])
-
-# 計算夏普比率
-risk_free_rate = 0.01  # 假設無風險利率
-sharpe_ratio = (test_data['return'].mean() - risk_free_rate) / test_data['return'].std()
-
-# 計算各股票的投資權重（基於夏普值最大化）
-weights = (test_data.groupby('stock_id')['return'].mean() / test_data.groupby('stock_id')['return'].std())
-weights = weights.dropna()  # 去除可能的NaN值
-weights[weights < 0] = 0    # 將負值權重設為 0
-weights = weights / weights.sum()  # 標準化至權重總和為 1
-
-# 最終輸出50支股票的投資權重
-result = weights.to_frame(name='investment_weight')
-print(weights.sum())
-print("投資權重結果:")
-print(result)
-
+if __name__ == "__main__":
+    main(False)
