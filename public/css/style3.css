@@ -1,6 +1,8 @@
 * {
     margin: 0;
     padding: 0;
+    overflow-x: hidden; /* 防止水平滾動 */
+    
 }
 
 header {
@@ -11,6 +13,11 @@ header {
     display: flex; /* 使用 Flex 排版 */
     align-items: center; /* 垂直居中 */
     padding-left: 100px; /* 確保內邊距充足 */
+    left: 0;
+    z-index: 100vh; /* 確保在最上層 */
+    transition: top 1s ease-in-out; /* 平滑過渡效果 */
+    margin: 0;
+    box-sizing: border-box; /*固定頁首文字導覽位置*/
 }
 
 header h1 {
@@ -31,6 +38,13 @@ header::before {
     margin-right: 10px; /* 與文字間距 */
 }
 
+header.headroom--pinned {
+    transform: translateY(0); /* 滑動顯示 */
+}
+
+header.headroom--unpinned {
+    transform: translateY(-100%); /* 滑動隱藏 */
+}
 
 nav ul {
     position: fixed;
@@ -71,7 +85,7 @@ nav ul li a:hover {
     text-align: center;
     color: 5A717A;
     padding-top: 0;
-    font-size: 1.8em;
+    font-size: 2em;
     margin-top: -50px;
     color: black;
 }
@@ -99,7 +113,7 @@ nav ul li a:hover {
     letter-spacing: 1px;
     color: black; /* 修正顏色編碼，加上 `#` */
     margin: 0 0 50px; /* 與圖片的距離 */
-    font-size: 1.8em;
+    font-size: 2em;
 }
 
 .time img {

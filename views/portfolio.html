@@ -21,27 +21,29 @@
                 </ul>
             </nav>
         </header>
-        <h1>My Portfolio</h1>
-        <table>
-            <thead>
-                <tr>
-                    <th>公司名稱</th>
-                    <th>股票代號</th>
-                    <th>權重</th>
-                    <th>開盤價</th>
-                    <th>收盤價</th>
-                    <th>成交價</th>
-                    <th>最高</th>
-                    <th>最低</th>
-                    <th>均價</th>
-                    <th>漲跌幅</th>
-                    <th>總成交量</th>
-                </tr>
-            </thead>
-            <tbody id="portfolioTable">
-                <!-- JavaScript 會自動插入資料 -->
-            </tbody>
-        </table>
+        <section class="content">
+            <h1>My Portfolio</h1>
+            <table>
+                <thead>
+                    <tr>
+                        <th>公司名稱</th>
+                        <th>股票代號</th>
+                        <th>權重</th>
+                        <th>開盤價</th>
+                        <th>收盤價</th>
+                        <th>成交價</th>
+                        <th>最高</th>
+                        <th>最低</th>
+                        <th>均價</th>
+                        <th>漲跌幅</th>
+                        <th>總成交量</th>
+                    </tr>
+                </thead>
+                <tbody id="portfolioTable">
+                    <!-- JavaScript 會自動插入資料 -->
+                </tbody>
+            </table>
+        </section>
 
         <footer class="footer">
             <div class="footer-content">
@@ -87,6 +89,17 @@
             </div>
         </footer>
     </div>
+    
+    <!-- JavaScript 程式碼 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.12.0/headroom.min.js"></script>
+    <script>
+        // 選取導覽列
+        const navbar = document.querySelector("header");
+    
+        // 初始化 Headroom
+        const headroom = new Headroom(navbar);
+        headroom.init(); // 啟用 Headroom
+    </script> 
 
     <!-- 彈出視窗區域，用於顯示個股K線圖 -->
     <div id="stockModal" class="modal">
