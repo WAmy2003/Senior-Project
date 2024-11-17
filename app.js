@@ -1,26 +1,15 @@
-//在 app.js 中建立 Express 伺服器，並設定路由來顯示各個頁面：
+import Headroom from "headroom.js";
 
-console.log("Starting the server...");
-const express = require('express');
-const app = express();
-const PORT = 3000;
+// 選取導覽列
+const navbar = document.querySelector("header");
 
-// 設定 EJS 模板引擎
-app.set('view engine', 'ejs');
-app.use(express.static('public'));
-
-// 首頁路由
-app.get('/', (req, res) => {
-    res.render('index');
+// 初始化 Headroom
+const headroom = new Headroom(navbar, {
+    offset: 100, // 滾動超過 100px 後才觸發
+    tolerance: 5, // 允許 5px 的滾動容忍值
+    classes: {
+        pinned: "headroom--pinned", // 當 header 固定時的類名
+        unpinned: "headroom--unpinned", // 當 header 隱藏時的類名
+    },
 });
-
-// 投資組合頁面路由
-app.get('/portfolio', (req, res) => {
-    const companies = [/* 放置蒐集的50家公司資訊陣列 */];
-    res.render('portfolio', { companies });
-});
-
-app.listen(PORT, () => {
-    console.log(`Server is running on http://localhost:${PORT}`);
-});
-    
+headroom.init(); // 啟用 Headroom

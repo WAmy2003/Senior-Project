@@ -22,6 +22,19 @@
                 <h1>開發團隊</h1>
                 <p>國立臺北科技大學資訊與財金管理系</p>
             </section>
+
+            <section class="member">
+
+            </section>
+
+            <section class="tech">
+
+            </section>
+
+            <section class="time">
+                <h1>開發時程</h1>
+                <img src="../image/timeline.png" alt="甘特圖">
+            </section>
         </main>
 
         <footer class="footer">
@@ -68,5 +81,16 @@
             </div>
         </footer>
     </div>
+    
+    <!-- JavaScript 程式碼 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.12.0/headroom.min.js"></script>
+    <script>
+        // 選取導覽列
+        const navbar = document.querySelector("header");
+        
+        // 初始化 Headroom
+        const headroom = new Headroom(navbar);
+        headroom.init(); // 啟用 Headroom
+    </script>
 </body>
 </html>

@@ -1,33 +1,54 @@
 * {
     margin: 0;
     padding: 0;
+    overflow-x: hidden; /* 防止水平滾動 */
+    
 }
 
 header {
-    /*
-    background-color: #D2D5F0;
-    */
-    height: 90px;
+    height: 80px; /* 固定高度 */
     width: 100%;
     position: relative;
+    position: fixed;
+    background-color: #383130; /* 背景顏色 */
+    display: flex; /* 使用 Flex 排版 */
+    align-items: center; /* 垂直居中 */
+    padding-left: 100px; /* 確保內邊距充足 */
+    left: 0;
+    z-index: 100vh; /* 確保在最上層 */
+    transition: top 1s ease-in-out; /* 平滑過渡效果 */
+    margin: 0;
+    box-sizing: border-box; /*固定頁首文字導覽位置*/
 }
 
 header h1 {
-    position: absolute;
-    left: 90px;
-    top: 0;
-    line-height: 80px;
-    /*
-    background-image: url(icon\logo.png);
-    background-repeat: no-repeat;
-    background-position: center;
-    width: 120px;
-    text-indent: -9999px;
-    */
+    position: absolute; /* 絕對定位 */
+    left: -9999px; /* 移出視窗以隱藏文字 */
+    visibility: hidden; /* 進一步確保不會顯示 */
+}
+
+header::before {
+    content: ""; /* 偽元素來作為 logo */
+    display: block;
+    width: 110px; /* 調整圖片寬度 */
+    height: 80px; /* 調整圖片高度 */
+    background-image: url("../image/icon.png"); /* 替換成正確的路徑 */
+    background-size: contain; /* 確保圖片完整顯示 */
+    background-repeat: no-repeat; /* 不重複 */
+    background-position: center; /* 居中 */
+    margin-right: 10px; /* 與文字間距 */
+}
+
+header.headroom--pinned {
+    transform: translateY(0); /* 滑動顯示 */
+}
+
+header.headroom--unpinned {
+    transform: translateY(-100%); /* 滑動隱藏 */
 }
 
 nav ul {
-    position: absolute;
+    position: fixed;
     right: 3.5vw;
     top: 0;
     line-height: 80px;
@@ -40,7 +61,7 @@ nav ul li {
 }
 
 nav ul li a {
-    color: #221a4c;
+    color: white;
     text-decoration: none;
     font-size: 1em;
 }
@@ -51,10 +72,15 @@ nav ul li a:hover {
     text-underline-offset: 5px;
 }
 
-h1 {
+.content {
+    margin-top: 18vh;
+}
+
+.content h1 {
     text-align: center;
-    margin-bottom: 20px;
+    margin-bottom: 30px;
     color: #333a56;
+    font-size: 2.5em;
 }
 
 /* 表格樣式 */
@@ -98,15 +124,17 @@ tbody tr:hover {
     font-weight: bold;
 }
 
+/*以下是頁尾設計*/
+
 .footer {
-    background: #5A717A;
+    background: #383130;
     color: white;
     padding: 50px 0;
 }
 
 .footer-content {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-evenly;
     max-width: 1200px;
     margin: 0 auto;
     padding-top: 30px;
@@ -166,7 +194,7 @@ tbody tr:hover {
 
 .newsletter-signup input[type="email"] {
     padding: 10px;
-    width: 17vw;
+    width: 14vw;
     border: none;
     border-radius: 2px;
     margin-right: 10px;
@@ -177,7 +205,7 @@ tbody tr:hover {
     padding: 10px 20px;
     border: none;
     border-radius: 2px;
-    background: #31C4C0;
+    background: #5A717A;
     color: white;
     cursor: pointer;
     margin-top: 15px;
@@ -190,7 +218,7 @@ tbody tr:hover {
 
 .footer-bottom {
     text-align: center;
-    padding-top: 100px;
+    padding-top: 80px;
     font-size: 12px;
     color: #d1d1d1;
 }

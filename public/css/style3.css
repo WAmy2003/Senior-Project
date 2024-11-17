@@ -1,33 +1,53 @@
 * {
     margin: 0;
     padding: 0;
+    overflow-x: hidden; /* 防止水平滾動 */
+    
 }
 
 header {
-    /*
-    background-color: #D2D5F0;
-    */
-    height: 90px;
+    height: 80px; /* 固定高度 */
     width: 100%;
-    position: relative; 
+    position: fixed;
+    background-color: #383130; /* 背景顏色 */
+    display: flex; /* 使用 Flex 排版 */
+    align-items: center; /* 垂直居中 */
+    padding-left: 100px; /* 確保內邊距充足 */
+    left: 0;
+    z-index: 100vh; /* 確保在最上層 */
+    transition: top 1s ease-in-out; /* 平滑過渡效果 */
+    margin: 0;
+    box-sizing: border-box; /*固定頁首文字導覽位置*/
 }
 
 header h1 {
-    position: fixed;
-    left: 90px;
-    top: 0;
-    line-height: 80px;
-    /*
-    background-image: url(icon\logo.png);
-    background-repeat: no-repeat;
-    background-position: center;
-    width: 120px;
-    text-indent: -9999px;
-    */
+    position: absolute; /* 絕對定位 */
+    left: -9999px; /* 移出視窗以隱藏文字 */
+    visibility: hidden; /* 進一步確保不會顯示 */
+}
+
+header::before {
+    content: ""; /* 偽元素來作為 logo */
+    display: block;
+    width: 110px; /* 調整圖片寬度 */
+    height: 80px; /* 調整圖片高度 */
+    background-image: url("../image/icon.png"); /* 替換成正確的路徑 */
+    background-size: contain; /* 確保圖片完整顯示 */
+    background-repeat: no-repeat; /* 不重複 */
+    background-position: center; /* 居中 */
+    margin-right: 10px; /* 與文字間距 */
+}
+
+header.headroom--pinned {
+    transform: translateY(0); /* 滑動顯示 */
+}
+
+header.headroom--unpinned {
+    transform: translateY(-100%); /* 滑動隱藏 */
 }
 
 nav ul {
-    position: absolute;
+    position: fixed;
     right: 3.5vw;
     top: 0;
     line-height: 80px;
@@ -35,17 +55,19 @@ nav ul {
 
 nav ul li {
     display: inline;
-    margin: 2vw; /* vw指的是相對視窗的比例 */
+    margin: 2vw;
+    /* vw指的是相對視窗的比例 */
 }
 
 nav ul li a {
-    color: #221a4c;
+    color: white;
     text-decoration: none;
     font-size: 1em;
 }
 
 nav ul li a:hover {
-    text-decoration: underline; /* 鼠標移至目錄文字下方出現底線 */
+    text-decoration: underline;
+    /* 鼠標移至目錄文字下方出現底線 */
     text-underline-offset: 5px;
 }
 
@@ -55,7 +77,7 @@ nav ul li a:hover {
     flex-direction: column;
     justify-content: center; /* 水平置中 */
     align-items: center; /* 垂直置中 */
-    height: 25vh;
+    height: 50vh;
 }
 
 .intro h1 {
@@ -63,8 +85,9 @@ nav ul li a:hover {
     text-align: center;
     color: 5A717A;
     padding-top: 0;
-    font-size: 1.8em;
+    font-size: 2em;
     margin-top: -50px;
+    color: black;
 }
 
 .intro p {
@@ -75,16 +98,44 @@ nav ul li a:hover {
     color: #8E8C8C;
 }
 
-/*以下為頁尾設計*/
+.time {
+    text-align: center; /* 文字置中 */
+    display: flex;
+    flex-direction: column; /* 子項目從上到下排列 */
+    justify-content: flex-start; /* 子項目從容器頂部開始 */
+    align-items: center; /* 水平置中 */
+    padding: 20px 0; /* 增加上下內邊距，避免被遮住 */
+    width: 100%; /* 寬度設為容器的 100% */
+    box-sizing: border-box; /* 包含 padding 在內計算寬度 */
+}
+
+.time h1 {
+    letter-spacing: 1px;
+    color: black; /* 修正顏色編碼，加上 `#` */
+    margin: 0 0 50px; /* 與圖片的距離 */
+    font-size: 2em;
+}
+
+.time img {
+    max-width: 80%; /* 圖片最大寬度為容器的 80% */
+    height: auto; /* 保持圖片的比例 */
+    display: block; /* 避免額外空白 */
+    margin: 0 auto; /* 確保水平置中 */
+}
+
+
+
+/*以下是頁尾設計*/
+
 .footer {
-    background: #5A717A;
+    background: #383130;
     color: white;
     padding: 50px 0;
 }
 
 .footer-content {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-evenly;
     max-width: 1200px;
     margin: 0 auto;
     padding-top: 30px;
@@ -93,7 +144,7 @@ nav ul li a:hover {
 .footer-column h4 a {
     text-decoration: none;
     color: white;
-} 
+}
 
 .footer-column {
     flex: 1;
@@ -132,7 +183,8 @@ nav ul li a:hover {
 .newsletter-signup {
     text-align: left;
     max-width: 1200px;
-    margin: 30px auto 0; /* 將整體往下移 */
+    margin: 30px auto 0;
+    /* 將整體往下移 */
     padding-top: 20px;
 }
 
@@ -143,7 +195,7 @@ nav ul li a:hover {
 
 .newsletter-signup input[type="email"] {
     padding: 10px;
-    width: 17vw;
+    width: 14vw;
     border: none;
     border-radius: 2px;
     margin-right: 10px;
@@ -154,7 +206,7 @@ nav ul li a:hover {
     padding: 10px 20px;
     border: none;
     border-radius: 2px;
-    background: #31C4C0;
+    background: #5A717A;
     color: white;
     cursor: pointer;
     margin-top: 15px;
@@ -167,7 +219,7 @@ nav ul li a:hover {
 
 .footer-bottom {
     text-align: center;
-    padding-top: 100px;
+    padding-top: 80px;
     font-size: 12px;
     color: #d1d1d1;
 }
