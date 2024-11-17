@@ -73,6 +73,7 @@ nav ul li a:hover {
     padding-top: 0;
     font-size: 1.8em;
     margin-top: -50px;
+    color: black;
 }
 
 .intro p {
@@ -82,6 +83,33 @@ nav ul li a:hover {
     letter-spacing: 1px;
     color: #8E8C8C;
 }
+
+.time {
+    text-align: center; /* 文字置中 */
+    display: flex;
+    flex-direction: column; /* 子項目從上到下排列 */
+    justify-content: flex-start; /* 子項目從容器頂部開始 */
+    align-items: center; /* 水平置中 */
+    padding: 20px 0; /* 增加上下內邊距，避免被遮住 */
+    width: 100%; /* 寬度設為容器的 100% */
+    box-sizing: border-box; /* 包含 padding 在內計算寬度 */
+}
+
+.time h1 {
+    letter-spacing: 1px;
+    color: black; /* 修正顏色編碼，加上 `#` */
+    margin: 0 0 50px; /* 與圖片的距離 */
+    font-size: 1.8em;
+}
+
+.time img {
+    max-width: 80%; /* 圖片最大寬度為容器的 80% */
+    height: auto; /* 保持圖片的比例 */
+    display: block; /* 避免額外空白 */
+    margin: 0 auto; /* 確保水平置中 */
+}
+
+
 
 /*以下是頁尾設計*/
 
