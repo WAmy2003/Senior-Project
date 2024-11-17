@@ -6,6 +6,8 @@ from sklearn.model_selection import cross_val_predict
 from sklearn.ensemble import RandomForestRegressor
 from xgboost import XGBRegressor
 from sklearn.linear_model import LinearRegression
+import sqlite3
+import os
 
 def load_and_process_data(path):
     # 確保路徑格式正確
@@ -105,13 +107,55 @@ def calculate_portfolio_weights(test_data, test_meta_features, meta_learner, ris
     
     return weights
 
+def data_to_sql(results, db_path, stock_dict):
+
+    # 過濾掉權重為 0 的資料
+    results = results[results['investment_weight'] > 0]
+
+    # 連接SQLite數據庫
+    conn = sqlite3.connect(db_path)
+    cursor = conn.cursor()
+    
+    # 創建表格
+    cursor.execute('''
+    CREATE TABLE IF NOT EXISTS portfolio_weights (
+        stock_id TEXT PRIMARY KEY,
+        stock_name TEXT,
+        weights REAL
+    )
+    ''')
+    
+    # 插入數據
+    for stock_id, row in results.iterrows():
+        cursor.execute('''
+        INSERT OR REPLACE INTO portfolio_weights (stock_id, stock_name, weights)
+        VALUES (?, ?, ?)
+        ''', (stock_id, stock_dict[stock_id], float(row['investment_weight'])))
+    
+    # 提交更改並關閉連接
+    conn.commit()
+    print(f"數據已成功寫入{db_path}")
+
 def main(isNormalized):
     # 設定路徑和參數
+    db_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'Django', 'db.sqlite3')
     path = 'C:\\Users\\user\\OneDrive\\桌面\\畢業專題\\資料蒐集\\原始數據'
     features = ['Dealer', 'Foreign_Investor', 'Investment_Trust', 
                 'RSI', 'SMA', 'WMA', 'MACD', 'MACD_Signal', 
                 'KD_K', 'KD_D', 'Bollinger_Upper', 'Bollinger_Middle', 
                 'Bollinger_Lower', 'CK_Index', 'sentiment_score']
+    stock_dict = {
+    '2330': '台積電', '2317': '鴻海', '2454': '聯發科', '2308': '台達電', '2382': '廣達',
+    '2891': '中信金', '2881': '富邦金', '2303': '聯華電子', '3711': '日月光投控', '2882': '國泰金',
+    '2886': '兆豐金', '2412': '中華電', '2884': '玉山金', '1216': '統一', '2885': '元大金',
+    '3034': '聯詠', '2357': '華碩', '2890': '永豐金', '2892': '第一金', '3231': '緯創',
+    '2345': '智邦', '3008': '大立光', '2327': '國巨', '5880': '合庫金', '2002': '中鋼',
+    '2880': '華南金', '2379': '瑞昱', '1303': '南亞', '2883': '凱基', '6669': '緯穎',
+    '1101': '台泥', '2887': '台新金', '3037': '欣興', '2301': '光寶', '3017': '奇鋐',
+    '1301': '台塑', '4938': '和碩', '2207': '和泰', '3661': '世芯', '2603': '長榮',
+    '2395': '研華', '3045': '台灣大哥大', '5876': '上海商銀', '1326': '台化', '4904': '遠傳',
+    '2912': '統一超', '1590': '亞德客', '5871': '中租-KY', '6505': '台塑', '2408': '南亞科'
+    }
     target = 'close'
     split_date = '2024-06-01'
     
@@ -135,10 +179,11 @@ def main(isNormalized):
         # 輸出結果
         result = weights.to_frame(name='investment_weight')
         print("\n總權重:", weights.sum())
-        print("\n投資權重結果:")
-        print(result)
+        # print("\n投資權重結果:")
+        # print(result)
         
-        # # 儲存結果
+        # 儲存結果
+        data_to_sql(result, db_path, stock_dict)
         # output_path = os.path.join(os.path.dirname(path), 'portfolio_weights.csv')
         # result.to_csv(output_path)
         # print(f"\n結果已儲存至: {output_path}")
@@ -147,4 +192,4 @@ def main(isNormalized):
         print(f"程式執行過程中發生錯誤: {e}")
 
 if __name__ == "__main__":
-    main(False)
+    main(True)

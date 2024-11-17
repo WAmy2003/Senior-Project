@@ -9,7 +9,7 @@ header {
     */
     height: 90px;
     width: 100%;
-    position: relative; 
+    position: relative;
 }
 
 header h1 {
@@ -35,7 +35,8 @@ nav ul {
 
 nav ul li {
     display: inline;
-    margin: 2vw; /* vw指的是相對視窗的比例 */
+    margin: 2vw;
+    /* vw指的是相對視窗的比例 */
 }
 
 nav ul li a {
@@ -45,7 +46,8 @@ nav ul li a {
 }
 
 nav ul li a:hover {
-    text-decoration: underline; /* 鼠標移至目錄文字下方出現底線 */
+    text-decoration: underline;
+    /* 鼠標移至目錄文字下方出現底線 */
     text-underline-offset: 5px;
 }
 
@@ -66,7 +68,8 @@ thead {
     background-color: #f0f0f0;
 }
 
-th, td {
+th,
+td {
     padding: 12px 15px;
     text-align: center;
     border: 1px solid #ddd;
@@ -112,7 +115,7 @@ tbody tr:hover {
 .footer-column h4 a {
     text-decoration: none;
     color: white;
-} 
+}
 
 .footer-column {
     flex: 1;
@@ -151,7 +154,8 @@ tbody tr:hover {
 .newsletter-signup {
     text-align: left;
     max-width: 1200px;
-    margin: 30px auto 0; /* 將整體往下移 */
+    margin: 30px auto 0;
+    /* 將整體往下移 */
     padding-top: 20px;
 }
 

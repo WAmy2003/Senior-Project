@@ -3,6 +3,11 @@ from django.http import JsonResponse, HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.views import View
 from .models import HistoricalReturn
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import status
+from fugle_marketdata import RestClient
+import datetime as dt
 
 # 禁用 CSRF 驗證以允許 API 測試
 @csrf_exempt
@@ -91,3 +96,34 @@ def historical_return_detail(request):
 
     except HistoricalReturn.DoesNotExist:
         return JsonResponse({"error": "HistoricalReturn not found"}, status=404)
+
+
+
+class StockDataView(APIView):
+    def get(self, request):
+        try:
+            # 獲取股票代碼參數
+            stock_id = request.GET.get('stock_id', '2330')  # 預設值為2330
+            
+            # 設置日期範圍
+            end_date = dt.date.today()
+            start_date = end_date - dt.timedelta(days=365)
+            
+            # 初始化 Fugle client
+            key = "Njg1M2VkY2ItZjQ2NC00M2VjLTk5NjMtODFlMjA3YzA2NzdlIDY3NGQ3ZTRmLWZkNDktNGVkNy1iMTkyLTUzZDk4ODY4YzkwMw"
+            client = RestClient(api_key=key)
+            stock = client.stock
+            
+            # 獲取股票數據
+            data = stock.historical.candles(**{"symbol": stock_id, "from": start_date.strftime('%Y-%m-%d'), "to": end_date.strftime('%Y-%m-%d'), "fields": "open,high,low,close,volume,change"})
+            
+            return Response({
+                'status': 'success',
+                'data': data
+            })
+            
+        except Exception as e:
+            return Response({
+                'status': 'error',
+                'message': str(e)
+            }, status=status.HTTP_400_BAD_REQUEST)

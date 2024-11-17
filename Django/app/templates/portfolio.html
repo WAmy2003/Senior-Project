@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Portfolio Table</title>
-    <link rel="stylesheet" href="../public/css/style2.css">
+    <link rel="stylesheet" href="../static/css/style2.css">
 </head>
 
 <body>
@@ -157,34 +157,37 @@
             console.log('開始獲取股票數據:', stockId);
             document.getElementById('stockPrice').textContent = '資料載入中...';
 
-            const apiUrl = `http://localhost:5000/api/stock_data?ticker=${stockId}`;
+            // 修改為 Django API 的 URL
+            const apiUrl = `http://localhost:8000/api/stock-data/?stock_id=${stockId}`;
             console.log('請求 URL:', apiUrl);
 
-            fetch(apiUrl)  // 使用您的後端API
+            fetch(apiUrl)
                 .then(response => {
-                    console.log('API響應狀態:', response.status);
                     if (!response.ok) {
                         throw new Error(`HTTP error! status: ${response.status}`);
                     }
                     return response.json();
                 })
-                .then(data => {
-                    console.log('收到的數據:', data); // 添加這行來查看收到的數據
+                .then(response => {
+                    console.log('收到的數據:', response);
 
-                    if (data && data.status === 'success' && data.data && data.data.length > 0) {
+                    // 修改這裡：正確取得 data 陣列
+                    const stockData = response.data.data;  // 注意這裡的路徑變更
+
+                    if (stockData && stockData.length > 0) {
                         // 準備K線圖數據
-                        const chartData = data.data.map(item => ({
-                            x: new Date(item.Date.replace('+0800 (台北標準時間)', '')).getTime(),
-                            o: parseFloat(item.Open),
-                            h: parseFloat(item.High),
-                            l: parseFloat(item.Low),
-                            c: parseFloat(item.Close)
+                        const chartData = stockData.map(item => ({
+                            x: new Date(item.date).getTime(),
+                            o: parseFloat(item.open),
+                            h: parseFloat(item.high),
+                            l: parseFloat(item.low),
+                            c: parseFloat(item.close)
                         }));
 
                         // 準備成交量數據
-                        const volume = data.data.map(item => ({
-                            x: new Date(item.Date),
-                            y: parseFloat(item.Volume)
+                        const volume = stockData.map(item => ({
+                            x: new Date(item.date),
+                            y: parseFloat(item.volume)
                         }));
 
                         console.log('處理後的圖表數據:', { chartData, volume });
@@ -192,17 +195,17 @@
                         updateChart(chartData, volume, stockId);
 
                         // 更新最新價格顯示
-                        const latestData = data.data[data.data.length - 1];
+                        const latestData = stockData[stockData.length - 1];
                         document.getElementById('stockPrice').innerHTML = `
                             最新數據：<br>
-                            開盤：${latestData.Open}<br>
-                            最高：${latestData.High}<br>
-                            最低：${latestData.Low}<br>
-                            收盤：${latestData.Close}<br>
-                            成交量：${latestData.Volume.toLocaleString()}
+                            開盤：${latestData.open}<br>
+                            最高：${latestData.high}<br>
+                            最低：${latestData.low}<br>
+                            收盤：${latestData.close}<br>
+                            成交量：${latestData.volume.toLocaleString()}
                         `;
                     } else {
-                        throw new Error('無效的數據格式: ' + JSON.stringify(data));
+                        throw new Error('無效的數據格式或空數據');
                     }
                 })
                 .catch(error => {
@@ -221,6 +224,10 @@
                 window.stockChart.destroy();
             }
 
+            const filteredData = ohlcData.filter(d =>
+                d.o !== null && d.h !== null && d.l !== null && d.c !== null
+            );
+
             // 設定K線圖樣式
             const candlestickElement = {
                 id: 'candlestick',
@@ -233,7 +240,6 @@
                     ctx.lineWidth = wickWidth;
 
                     data.datasets[0].data.forEach((point, i) => {
-                        // 只畫K線圖，不畫成交量
                         if (point.o !== undefined) {
                             const open = y.getPixelForValue(point.o);
                             const high = y.getPixelForValue(point.h);
@@ -243,8 +249,8 @@
 
                             // 設置顏色（紅色或綠色）
                             const isBullish = close < open;
-                            ctx.fillStyle = isBullish ? '#4CD964' : '#FF3B30';  // 調整漲跌的實體顏色
-                            ctx.strokeStyle = isBullish ? '#4CD964' : '#FF3B30'; // 調整影線顏色
+                            ctx.fillStyle = isBullish ? '#4CD964' : '#FF3B30';
+                            ctx.strokeStyle = isBullish ? '#4CD964' : '#FF3B30';
                             ctx.lineWidth = wickWidth;
 
                             // 畫影線
@@ -262,11 +268,11 @@
 
             // 創建新圖表
             window.stockChart = new Chart(ctx, {
-                type: 'candlestick',  // 改為 candlestick 類型
+                type: 'candlestick',
                 data: {
                     datasets: [{
                         label: '股價',
-                        data: ohlcData.map(d => ({
+                        data: filteredData.map(d => ({
                             x: d.x,
                             o: d.o,
                             h: d.h,
@@ -290,20 +296,19 @@
                             time: {
                                 displayFormats: {
                                     day: 'yyyy/MM/dd'
-                                },
-                                unit: 'day'
+                                }
                             },
-                            offset: true,
+                            distribution: 'linear',
                             ticks: {
-                                major: {
-                                    enabled: true,
-                                },
                                 source: 'data',
                                 maxRotation: 0,
                                 autoSkip: true,
-                                autoSkipPadding: 75,
-                                sampleSize: 100
+                                maxTicksLimit: 10  // 限制X軸標籤數量
                             },
+                            grid: {
+                                display: true,
+                                drawOnChartArea: true
+                            }
                         },
                         y: {
                             position: 'right',
@@ -320,6 +325,19 @@
                         title: {
                             display: true,
                             text: `${stockId} 股價走勢圖`
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function (context) {
+                                    const point = context.raw;
+                                    return [
+                                        `開盤: ${point.o}`,
+                                        `最高: ${point.h}`,
+                                        `最低: ${point.l}`,
+                                        `收盤: ${point.c}`
+                                    ];
+                                }
+                            }
                         }
                     }
                 },
