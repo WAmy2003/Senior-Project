@@ -1,6 +1,7 @@
 * {
     margin: 0;
     padding: 0;
+    overflow-x: hidden; /* 防止水平滾動 */
 }
 
 header {
@@ -22,7 +23,7 @@ header h1 {
 header::before {
     content: ""; /* 偽元素來作為 logo */
     display: block;
-    width: 80px; /* 調整圖片寬度 */
+    width: 110px; /* 調整圖片寬度 */
     height: 80px; /* 調整圖片高度 */
     background-image: url("../image/icon.png"); /* 替換成正確的路徑 */
     background-size: contain; /* 確保圖片完整顯示 */
@@ -118,6 +119,8 @@ nav ul li a:hover {
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    width: 100vw;
+    overflow-x: hidden; /* 防止水平滾動 */
 }
 
 .statement h2 {
@@ -186,8 +189,10 @@ h2 {
     /* 調整字體大小 */
     line-height: 2.2em;
     /* 增加行距 */
-    padding-bottom: 25vh;
+    padding-bottom: 20vh;
     padding-top: 15px;
+    overflow-x: hidden; /* 防止水平滾動 */
+    width: 100vw;
 }
 
 .end h4 {
@@ -202,6 +207,10 @@ h2 {
     background: #383130;
     color: white;
     padding: 50px 0;
+    width: 100vw; /* 確保寬度覆蓋整個視窗 */
+    margin: 0; /* 移除外邊距 */
+    overflow-x: hidden; /* 防止水平滾動 */
+    box-sizing: border-box; /* 確保寬度包含內外邊距 */
 }
 
 .footer-content {
