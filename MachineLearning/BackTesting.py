@@ -16,13 +16,13 @@ weights = {
     '1216.TW': 0.0349,
     '1301.TW': 0.0000,
     '1303.TW': 0.0000,
-    '1326.TW': 0.0114,
+    '1326.TW': 0.0237,
     '1590.TW': 0.0352,
     '2002.TW': 0.0000,
     '2207.TW': 0.0351,
     '2301.TW': 0.0000,
     '2303.TW': 0.0000,
-    '2308.TW': 0.0356,
+    '2308.TW': 0.0358,
     '2317.TW': 0.0000,
     '2327.TW': 0.0380,
     '2330.TW': 0.0715,
@@ -61,7 +61,7 @@ weights = {
     '5876.TW': 0.0000,
     '5880.TW': 0.0000,
     '6505.TW': 0.0338,
-    '6669.TW': 0.0349
+    '6669.TW': 0.0224
 }
 # # 無正規化
 # weights = {
@@ -119,7 +119,7 @@ weights = {
 
 # 從 yfinance 獲取歷史價格數據
 tickers = list(weights.keys())
-prices = yf.download(tickers, start='2024-06-28', end='2024-10-01')['Adj Close']
+prices = yf.download(tickers, start='2024-07-01', end='2024-10-01')['Adj Close']
 
 # 確保權重和價格數據對應
 prices = prices[list(weights.keys())]
@@ -132,30 +132,42 @@ returns = returns.loc['2024-07-01':'2024-10-01']
 
 # 計算投資組合的每日回報率
 portfolio_returns = (returns.dot(pd.Series(weights))).round(6)
-
-# 將投資組合回報率轉換為百分比格式，並保留四位小數
-# portfolio_returns_percentage = portfolio_returns * 100
-# portfolio_returns_percentage = portfolio_returns_percentage.apply(lambda x: f'{x:.4f}%')
+portfolio_returns.loc['2024-07-01'] = 0
 
 # 建立數據表並顯示
 portfolio_returns = portfolio_returns.to_frame('smart_pick')
 # display(portfolio_returns)
 
-# 重設索引，將日期變成普通列
-portfolio_returns.reset_index(inplace=True)
-portfolio_returns.columns = ['date', 'smart_pick']
+# 計算績效指標
+portfolio_returns_only = portfolio_returns['smart_pick']  # 只取報酬率欄位，不要日期欄位
+
+# 計算投資組合的累積回報率
+cumulative_returns = ((1 + portfolio_returns_only).cumprod() - 1).round(6)
+print(cumulative_returns)
+
+# 計算績效指標
+annual_return = cumulative_returns.iloc[-1] * 4
+annual_volatility = portfolio_returns_only.std() * np.sqrt(252)
+sharpe_ratio = annual_return / annual_volatility
+
+print(f'年化報酬率: {annual_return * 100:.2f}%')
+print(f'年化波動率: {annual_volatility:.2f}')
+print(f'夏普比率: {sharpe_ratio:.2f}')
+
+cumulative_returns = cumulative_returns.reset_index()
+cumulative_returns.columns = ['date', 'smart_pick']
 
 # 連接數據庫並更新表格
 conn = sqlite3.connect(db_path)
 cursor = conn.cursor()
 
-# # 添加新列到現有表格（第一次才要）
-# cursor.execute('''
-# ALTER TABLE history_returns ADD COLUMN smart_pick REAL DEFAULT NULL;
-# ''')
+# 添加新列到現有表格（第一次才要）
+cursor.execute('''
+ALTER TABLE history_returns ADD COLUMN smart_pick REAL DEFAULT NULL;
+''')
 
 # 更新數據
-for index, row in portfolio_returns.iterrows():
+for _, row in cumulative_returns.iterrows():
     cursor.execute('''
     UPDATE history_returns 
     SET smart_pick = ?
@@ -164,21 +176,6 @@ for index, row in portfolio_returns.iterrows():
 
 # 提交更改並關閉連接
 conn.commit()
-
-# 計算績效指標
-portfolio_returns_only = portfolio_returns['smart_pick']  # 只取報酬率欄位，不要日期欄位
-
-# 計算投資組合的累積回報率
-cumulative_returns = (1 + portfolio_returns_only).cumprod() - 1
-
-# 計算績效指標
-annual_return = portfolio_returns_only.mean() * 252
-annual_volatility = portfolio_returns_only.std() * np.sqrt(252)
-sharpe_ratio = annual_return / annual_volatility
-
-print(f'年化報酬率: {annual_return:.2f}')
-print(f'年化波動率: {annual_volatility:.2f}')
-print(f'夏普比率: {sharpe_ratio:.2f}')
 
 # 視覺化
 # plt.figure(figsize=(10, 6))
