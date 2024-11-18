@@ -29,13 +29,12 @@
                         <th>公司名稱</th>
                         <th>股票代號</th>
                         <th>權重</th>
+                        <th>報酬率</th>
                         <th>開盤價</th>
                         <th>收盤價</th>
-                        <th>成交價</th>
+                        <th>漲跌</th>
                         <th>最高</th>
                         <th>最低</th>
-                        <th>均價</th>
-                        <th>漲跌幅</th>
                         <th>總成交量</th>
                     </tr>
                 </thead>
@@ -89,17 +88,17 @@
             </div>
         </footer>
     </div>
-    
+
     <!-- JavaScript 程式碼 -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.12.0/headroom.min.js"></script>
     <script>
         // 選取導覽列
         const navbar = document.querySelector("header");
-    
+
         // 初始化 Headroom
         const headroom = new Headroom(navbar);
         headroom.init(); // 啟用 Headroom
-    </script> 
+    </script>
 
     <!-- 彈出視窗區域，用於顯示個股K線圖 -->
     <div id="stockModal" class="modal">
@@ -117,251 +116,20 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> <!-- 引入 jQuery -->
     <script src="https://cdn.jsdelivr.net/npm/chartjs-chart-financial"></script>
     <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns"></script>
+    <script src="../static/js/portfolio_init.js"></script>
+    <script src="../static/js/stock_data.js"></script>
+    <script src="../static/js/chart.js"></script>
 
     <script>
-        const stock_ids = [
-            '2330', '2317', '2454', '2308', '2382', '2891', '2881', '2303', '3711', '2882',
-            '2886', '2412', '2884', '1216', '2885', '3034', '2357', '2890', '2892', '3231',
-            '2345', '3008', '2327', '5880', '2002', '2880', '2379', '1303', '2883', '6669',
-            '1101', '2887', '3037', '2301', '3017', '1301', '4938', '2207', '3661', '2603',
-            '2395', '3045', '5876', '1326', '4904', '2912', '1590', '5871', '6505', '2408'
-        ];
+        // 頁面初始化代碼
+        document.addEventListener('DOMContentLoaded', function () {
+            initializePortfolio();
 
-        const company_names = [
-            '台積電', '鴻海', '聯發科', '台達電', '廣達', '中信金', '富邦金', '聯華電子', '日月光投控', '國泰金',
-            '兆豐金', '中華電', '玉山金', '統一', '元大金', '聯詠', '華碩', '永豐金', '第一金', '緯創',
-            '智邦', '大立光', '國巨', '合庫金', '中鋼', '華南金', '瑞昱', '南亞', '凱基', '緯穎',
-            '台泥', '台新金', '欣興', '光寶', '奇鋐', '台塑', '和碩', '和泰', '世芯', '長榮',
-            '研華', '台灣大哥大', '上海商銀', '台化', '遠傳', '統一超', '亞德客', '中租-KY', '台塑', '南亞科'
-        ];
-
-        function populateTable() {
-            const tableBody = document.getElementById('portfolioTable');
-            let rows = '';
-
-            for (let i = 0; i < stock_ids.length; i++) {
-                rows += `
-                    <tr onclick="showStockInfo('${stock_ids[i]}', '${company_names[i]}')">
-                        <td>${company_names[i]}</td>
-                        <td>${stock_ids[i]}</td>
-                        <td>—</td>
-                        <td>—</td>
-                        <td>—</td>
-                        <td>—</td>
-                        <td>—</td>
-                        <td>—</td>
-                        <td>—</td>
-                        <td>—</td>
-                        <td>—</td>
-                    </tr>
-                `;
-            }
-            tableBody.innerHTML = rows;
-        }
-
-        function showStockInfo(stockId, companyName) {
-            document.getElementById('modalTitle').textContent = companyName;
-            $('#stockModal').fadeIn();
-
-            fetchStockData(stockId);
-        }
-
-        function fetchStockData(stockId) {
-            console.log('開始獲取股票數據:', stockId);
-            document.getElementById('stockPrice').textContent = '資料載入中...';
-
-            // 修改為 Django API 的 URL
-            const apiUrl = `http://localhost:8000/api/stock-data/?stock_id=${stockId}`;
-            console.log('請求 URL:', apiUrl);
-
-            fetch(apiUrl)
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error(`HTTP error! status: ${response.status}`);
-                    }
-                    return response.json();
-                })
-                .then(response => {
-                    console.log('收到的數據:', response);
-
-                    // 修改這裡：正確取得 data 陣列
-                    const stockData = response.data.data;  // 注意這裡的路徑變更
-
-                    if (stockData && stockData.length > 0) {
-                        // 準備K線圖數據
-                        const chartData = stockData.map(item => ({
-                            x: new Date(item.date).getTime(),
-                            o: parseFloat(item.open),
-                            h: parseFloat(item.high),
-                            l: parseFloat(item.low),
-                            c: parseFloat(item.close)
-                        }));
-
-                        // 準備成交量數據
-                        const volume = stockData.map(item => ({
-                            x: new Date(item.date),
-                            y: parseFloat(item.volume)
-                        }));
-
-                        console.log('處理後的圖表數據:', { chartData, volume });
-
-                        updateChart(chartData, volume, stockId);
-
-                        // 更新最新價格顯示
-                        const latestData = stockData[stockData.length - 1];
-                        document.getElementById('stockPrice').innerHTML = `
-                            最新數據：<br>
-                            開盤：${latestData.open}<br>
-                            最高：${latestData.high}<br>
-                            最低：${latestData.low}<br>
-                            收盤：${latestData.close}<br>
-                            成交量：${latestData.volume.toLocaleString()}
-                        `;
-                    } else {
-                        throw new Error('無效的數據格式或空數據');
-                    }
-                })
-                .catch(error => {
-                    console.error('詳細錯誤資訊:', error);
-                    document.getElementById('stockPrice').textContent = '資料獲取錯誤，請稍後再試。';
-                });
-        }
-
-        // 修改 updateChart 函數
-        function updateChart(ohlcData, volumeData, stockId) {
-            console.log('開始更新圖表，數據:', { ohlcData, volumeData });
-            const ctx = document.getElementById('chartContainer').getContext('2d');
-
-            // 如果已經存在圖表，先銷毀
-            if (window.stockChart) {
-                window.stockChart.destroy();
-            }
-
-            const filteredData = ohlcData.filter(d =>
-                d.o !== null && d.h !== null && d.l !== null && d.c !== null
-            );
-
-            // 設定K線圖樣式
-            const candlestickElement = {
-                id: 'candlestick',
-                beforeDatasetsDraw(chart, args, options) {
-                    const { ctx, data, scales: { x, y } } = chart;
-                    const candleWidth = 5;
-                    const wickWidth = 1;
-
-                    ctx.strokeStyle = 'rgba(0, 0, 0, 0.5)';
-                    ctx.lineWidth = wickWidth;
-
-                    data.datasets[0].data.forEach((point, i) => {
-                        if (point.o !== undefined) {
-                            const open = y.getPixelForValue(point.o);
-                            const high = y.getPixelForValue(point.h);
-                            const low = y.getPixelForValue(point.l);
-                            const close = y.getPixelForValue(point.c);
-                            const x0 = x.getPixelForValue(point.x) - candleWidth / 2;
-
-                            // 設置顏色（紅色或綠色）
-                            const isBullish = close < open;
-                            ctx.fillStyle = isBullish ? '#4CD964' : '#FF3B30';
-                            ctx.strokeStyle = isBullish ? '#4CD964' : '#FF3B30';
-                            ctx.lineWidth = wickWidth;
-
-                            // 畫影線
-                            ctx.beginPath();
-                            ctx.moveTo(x0 + candleWidth / 2, high);
-                            ctx.lineTo(x0 + candleWidth / 2, low);
-                            ctx.stroke();
-
-                            // 畫實體部分
-                            ctx.fillRect(x0, Math.min(open, close), candleWidth, Math.abs(close - open));
-                        }
-                    });
-                }
+            // 設定 modal 關閉事件
+            document.querySelector('.close').onclick = function () {
+                $('#stockModal').fadeOut();
             };
-
-            // 創建新圖表
-            window.stockChart = new Chart(ctx, {
-                type: 'candlestick',
-                data: {
-                    datasets: [{
-                        label: '股價',
-                        data: filteredData.map(d => ({
-                            x: d.x,
-                            o: d.o,
-                            h: d.h,
-                            l: d.l,
-                            c: d.c
-                        }))
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    layout: {
-                        padding: {
-                            left: 20,
-                            right: 20
-                        }
-                    },
-                    scales: {
-                        x: {
-                            type: 'time',
-                            time: {
-                                displayFormats: {
-                                    day: 'yyyy/MM/dd'
-                                }
-                            },
-                            distribution: 'linear',
-                            ticks: {
-                                source: 'data',
-                                maxRotation: 0,
-                                autoSkip: true,
-                                maxTicksLimit: 10  // 限制X軸標籤數量
-                            },
-                            grid: {
-                                display: true,
-                                drawOnChartArea: true
-                            }
-                        },
-                        y: {
-                            position: 'right',
-                            grid: {
-                                display: true,
-                                drawOnChartArea: true
-                            }
-                        }
-                    },
-                    plugins: {
-                        legend: {
-                            display: false
-                        },
-                        title: {
-                            display: true,
-                            text: `${stockId} 股價走勢圖`
-                        },
-                        tooltip: {
-                            callbacks: {
-                                label: function (context) {
-                                    const point = context.raw;
-                                    return [
-                                        `開盤: ${point.o}`,
-                                        `最高: ${point.h}`,
-                                        `最低: ${point.l}`,
-                                        `收盤: ${point.c}`
-                                    ];
-                                }
-                            }
-                        }
-                    }
-                },
-                plugins: [candlestickElement]
-            });
-        }
-        document.querySelector('.close').onclick = function () {
-            $('#stockModal').fadeOut();
-        };
-
-        populateTable();
+        });
     </script>
 
     <style>

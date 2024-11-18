@@ -149,7 +149,7 @@ portfolio_returns.columns = ['date', 'smart_pick']
 conn = sqlite3.connect(db_path)
 cursor = conn.cursor()
 
-# # 添加新列到現有表格
+# # 添加新列到現有表格（第一次才要）
 # cursor.execute('''
 # ALTER TABLE history_returns ADD COLUMN smart_pick REAL DEFAULT NULL;
 # ''')

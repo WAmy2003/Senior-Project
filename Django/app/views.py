@@ -2,6 +2,7 @@ import json
 from django.http import JsonResponse, HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.views import View
+from django.db import connection
 from .models import HistoricalReturn
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -127,3 +128,30 @@ class StockDataView(APIView):
                 'status': 'error',
                 'message': str(e)
             }, status=status.HTTP_400_BAD_REQUEST)
+        
+def get_portfolio_weights(request):
+    try:
+        with connection.cursor() as cursor:
+            cursor.execute("""
+                SELECT stock_id, stock_name, weights 
+                FROM portfolio_weights 
+                ORDER BY weights DESC
+            """)
+            rows = cursor.fetchall()
+            
+            # 將查詢結果轉換為所需格式
+            portfolio_data = {
+                'stock_ids': [row[0] for row in rows],
+                'company_names': [row[1] for row in rows],
+                'weights': [float(row[2]) for row in rows]
+            }
+            
+            return JsonResponse({
+                'status': 'success',
+                'data': portfolio_data
+            })
+    except Exception as e:
+        return JsonResponse({
+            'status': 'error',
+            'message': str(e)
+        }, status=500)
