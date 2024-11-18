@@ -6,7 +6,7 @@
 }
 
 header {
-    height: 80px; /* 固定高度 */
+    height: 85px; /* 固定高度 */
     width: 100%;
     position: fixed;
     background-color: #383130; /* 背景顏色 */
@@ -32,9 +32,9 @@ header::before {
     width: 110px; /* 調整圖片寬度 */
     height: 80px; /* 調整圖片高度 */
     background-image: url("../image/icon.png"); /* 替換成正確的路徑 */
-    background-size: contain; /* 確保圖片完整顯示 */
+    background-size: 250% auto; /* 確保圖片完整顯示 */
     background-repeat: no-repeat; /* 不重複 */
-    background-position: center; /* 居中 */
+    background-position: center 38%; /* 居中 */
     margin-right: 10px; /* 與文字間距 */
 }
 
