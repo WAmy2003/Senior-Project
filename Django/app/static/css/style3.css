@@ -6,7 +6,7 @@
 }
 
 header {
-    height: 80px; /* 固定高度 */
+    height: 85px; /* 固定高度 */
     width: 100%;
     position: fixed;
     background-color: #383130; /* 背景顏色 */
@@ -32,9 +32,9 @@ header::before {
     width: 110px; /* 調整圖片寬度 */
     height: 80px; /* 調整圖片高度 */
     background-image: url("../image/icon.png"); /* 替換成正確的路徑 */
-    background-size: contain; /* 確保圖片完整顯示 */
+    background-size: 250% auto; /* 確保圖片完整顯示 */
     background-repeat: no-repeat; /* 不重複 */
-    background-position: center; /* 居中 */
+    background-position: center 38%; /* 居中 */
     margin-right: 10px; /* 與文字間距 */
 }
 
@@ -47,10 +47,10 @@ header.headroom--unpinned {
 }
 
 nav ul {
-    position: fixed;
+    position: absolute;
     right: 3.5vw;
     top: 0;
-    line-height: 80px;
+    line-height: 85px;
 }
 
 nav ul li {
@@ -98,6 +98,101 @@ nav ul li a:hover {
     color: #8E8C8C;
 }
 
+/*開發技術4張card*/
+
+.tech {
+    text-align: center; /* 置中文字於中間 */
+    display: inline;
+    flex-wrap: wrap;
+    flex-direction: column; /* 上下排列標題與卡片容器 */
+    align-items: center; /* 讓整體居中 */
+    height: auto; /* 自適應內容高度 */
+    margin: 0;
+    padding: 20px 0; /* 增加上下內邊距 */
+}
+
+.tech h1 {
+    font-size: 2em;
+    margin-bottom: 20px; /* 與卡片容器間距 */
+    color: black;
+}
+
+/* 外部容器設置 */
+.skills-container {
+    padding: 20px;
+    margin-bottom: 1vh;
+}
+
+/* 使用 Flexbox 來讓卡片水平排列 */
+.skills-grid {
+    display: flex;            /* 使用 Flexbox 來排列卡片 */
+    justify-content: center; /* 卡片之間水平分散 */
+    flex-wrap: wrap;          /* 若視窗過窄，允許卡片自動換行 */
+}
+
+/* 個別卡片的樣式 */
+.skill-card {
+    margin: 50px;
+    background-color: white;
+    border-radius: 8px;
+    padding: 15px;
+    flex: 1;                  /* 卡片寬度平均分配 */
+    min-width: 200px;         /* 設定卡片最小寬度 */
+    max-width: 15%;           /* 設定卡片最大寬度，四張卡片並列在同一行 */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* 卡片標題樣式 */
+.skill-header {
+    background-color: #d0e4f9;
+    padding: 10px;
+    border-radius: 5px;
+    text-align: center;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+/* 列表樣式 */
+.skill-card ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.skill-card li {
+    display: flex;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+.skill-card img {
+    width: 24px;
+    height: 24px;
+    margin-right: 10px;
+}
+/* 響應式設計 */
+@media (max-width: 768px) {
+    .skills-container {
+        display: flex; /* 確保響應式佈局 */
+        flex-direction: column; /* 改為垂直排列 */
+        align-items: center;
+    }
+
+    .skill-card {
+        max-width: 100%; /* 改為全寬顯示 */
+        margin-bottom: 20px; /* 增加下方間距 */
+    }
+}
+
+@media (max-width: 480px) {
+    .skill-card {
+        max-width: 100%; /* 改為一排一張 */
+    }
+}
+
+
+
+/*時程*/
+
 .time {
     text-align: center; /* 文字置中 */
     display: flex;
@@ -134,12 +229,14 @@ nav ul li a:hover {
 }
 
 .footer-content {
-    display: flex;
-    justify-content: space-evenly;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
     max-width: 1200px;
     margin: 0 auto;
     padding-top: 30px;
 }
+
 
 .footer-column h4 a {
     text-decoration: none;

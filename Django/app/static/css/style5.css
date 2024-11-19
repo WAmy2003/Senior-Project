@@ -49,7 +49,7 @@ header.headroom--unpinned {
 
 
 nav ul {
-    position: fixed;
+    position: absolute;
     right: 3.5vw;
     top: 0;
     line-height: 85px;
@@ -229,8 +229,9 @@ h2 {
 }
 
 .footer-content {
-    display: flex;
-    justify-content: space-evenly;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
     max-width: 1200px;
     margin: 0 auto;
     padding-top: 30px;
