@@ -77,7 +77,7 @@ nav ul li a:hover {
     flex-direction: column;
     justify-content: center; /* 水平置中 */
     align-items: center; /* 垂直置中 */
-    height: 50vh;
+    margin-top: 20vh;
 }
 
 .intro h1 {
@@ -86,7 +86,6 @@ nav ul li a:hover {
     color: 5A717A;
     padding-top: 0;
     font-size: 2em;
-    margin-top: -50px;
     color: black;
 }
 
@@ -97,6 +96,48 @@ nav ul li a:hover {
     letter-spacing: 1px;
     color: #8E8C8C;
 }
+
+/* 設定 .circle-container 來讓圓圈水平並列 */
+.circle-container {
+    margin-top: 40px;
+    margin-bottom: 40px;
+    display: flex;
+    justify-content: center;
+    gap: 15vw; /* 設定圓圈之間的間距 */
+    padding: 20px 0;
+}
+
+/* 設定每個圓圈和其文字的樣式 */
+.circle-item {
+    text-align: center; /* 讓文字置中對齊 */
+}
+
+/* 設定圓圈樣式 */
+.circle {
+    width: 120px; /* 圓圈寬度 */
+    height: 120px; /* 圓圈高度 */
+    border-radius: 50%; /* 讓容器變成圓形 */
+    overflow: hidden; /* 隱藏溢出的圖片部分 */
+    background-color: #e0e0e0; /* 圓圈背景顏色，可以依需求更改 */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* 圓圈內圖片的樣式 */
+.circle img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* 讓圖片自動填滿圓圈，保持比例 */
+}
+
+/* 圓圈下方文字樣式 */
+.circle-item p {
+    margin-top: 10px;
+    font-size: 16px;
+    color: #333; /* 可以根據需求調整文字顏色 */
+}
+
 
 /*開發技術4張card*/
 
