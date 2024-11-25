@@ -94,8 +94,7 @@ thead {
     background-color: #f0f0f0;
 }
 
-th,
-td {
+th,td {
     padding: 12px 15px;
     text-align: center;
     border: 1px solid #ddd;
@@ -123,6 +122,21 @@ tbody tr:hover {
     padding: 5px 10px;
     font-weight: bold;
 }
+
+/* 可選：自訂工具提示的樣式 */
+.tooltip {
+    position: absolute;
+    padding: 5px 10px;
+    background-color: rgba(0, 0, 0, 0.8);
+    color: #fff;
+    font-size: 12px;
+    border-radius: 4px;
+    pointer-events: none;
+    opacity: 0; /* 默認隱藏 */
+    transition: opacity 0.1s ease; /* 快速過渡 */
+    z-index: 9999;
+}
+
 
 /*以下是頁尾設計*/
 

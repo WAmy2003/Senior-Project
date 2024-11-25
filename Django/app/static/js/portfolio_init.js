@@ -3,6 +3,11 @@ let stock_ids = [];
 let company_names = [];
 let weights = [];
 
+// 自訂提示框
+const tooltip = document.createElement('div');
+tooltip.classList.add('tooltip');
+document.body.appendChild(tooltip);
+
 // 從後端獲取資料並初始化表格
 async function initializePortfolio() {
     try {
@@ -45,16 +50,16 @@ function populateTable() {
         weights[i] = (weights[i] * 100).toFixed(2) + '%';
         rows += `
             <tr id="stock-row-${stock_ids[i]}" onclick="showStockInfo('${stock_ids[i]}', '${company_names[i]}')">
-                <td>${company_names[i]}</td>
-                <td>${stock_ids[i]}</td>
-                <td>${weights[i]}</td>
-                <td>—</td>
-                <td>—</td>
-                <td>—</td>
-                <td>—</td>
-                <td>—</td>
-                <td>—</td>
-                <td>—</td>
+                <td onmouseover="showTooltip(event, '公司名稱')" onmouseout="hideTooltip()"> ${company_names[i]}</td>
+                <td onmouseover="showTooltip(event, '股票代號')" onmouseout="hideTooltip()"> ${stock_ids[i]}</td>
+                <td onmouseover="showTooltip(event, '權重')" onmouseout="hideTooltip()"> ${weights[i]}</td>
+                <td onmouseover="showTooltip(event, '報酬率')" onmouseout="hideTooltip()"> — </td>
+                <td onmouseover="showTooltip(event, '開盤價')" onmouseout="hideTooltip()"> — </td>
+                <td onmouseover="showTooltip(event, '收盤價')" onmouseout="hideTooltip()"> — </td>
+                <td onmouseover="showTooltip(event, '漲跌')" onmouseout="hideTooltip()"> — </td>
+                <td onmouseover="showTooltip(event, '最高')" onmouseout="hideTooltip()"> — </td>
+                <td onmouseover="showTooltip(event, '最低')" onmouseout="hideTooltip()"> — </td>
+                <td onmouseover="showTooltip(event, '總成交量')" onmouseout="hideTooltip()"> — </td>
             </tr>
         `;
     }
@@ -64,4 +69,15 @@ function populateTable() {
     stock_ids.forEach(stockId => {
         fetchStockDataForTable(stockId);
     });
+}
+
+function showTooltip(event, text) {
+    tooltip.style.opacity = '1'; // 顯示提示框
+    tooltip.textContent = text;
+    tooltip.style.left = `${event.pageX + 10}px`; // 右側顯示
+    tooltip.style.top = `${event.pageY + 10}px`; // 上方顯示
+}
+
+function hideTooltip() {
+    tooltip.style.opacity = '0'; // 隱藏提示框
 }
