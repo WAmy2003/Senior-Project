@@ -3,12 +3,25 @@ from django.http import JsonResponse, HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.views import View
 from django.db import connection
+from django.shortcuts import render
 from .models import HistoricalReturn
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from fugle_marketdata import RestClient
 import datetime as dt
+
+def main_view(request):
+    return render(request, 'main.html')
+
+def portfolio_view(request):
+    return render(request, 'portfolio.html')
+
+def analysis_view(request):
+    return render(request, 'analysis.html')
+
+def aboutus_view(request):
+    return render(request, 'aboutus.html')
 
 # 禁用 CSRF 驗證以允許 API 測試
 @csrf_exempt
