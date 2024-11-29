@@ -55,14 +55,44 @@ function prepareChartData(stockData) {
 
 function updatePriceDisplay(latestData) {
     document.getElementById('stockPrice').innerHTML = `
-        最新數據：<br>
-        開盤：${latestData.open}<br>
-        最高：${latestData.high}<br>
-        最低：${latestData.low}<br>
-        收盤：${latestData.close}<br>
-        成交量：${latestData.volume.toLocaleString()}
+        <div class="data-title">最新數據：</div>
+        <div class="data-container">
+            <!-- 第一行 -->
+            <div class="data-row">
+                <div class="data-item">
+                    <div class="data-line"></div>
+                    <span class="data-label">開盤：</span>
+                    <span>${latestData.open}</span>
+                </div>
+                <div class="data-item">
+                    <div class="data-line"></div>
+                    <span class="data-label">收盤：</span>
+                    <span>${latestData.close}</span>
+                </div>
+            </div>
+            <!-- 第二行 -->
+            <div class="data-row">
+                <div class="data-item">
+                    <div class="data-line"></div>
+                    <span class="data-label">最高：</span>
+                    <span>${latestData.high}</span>
+                </div>
+                <div class="data-item">
+                    <div class="data-line"></div>
+                    <span class="data-label">成交量：</span>
+                    <span>${latestData.volume.toLocaleString()}</span>
+                </div>
+            </div>
+            <!-- 最低獨占一行 -->
+            <div class="data-item single-row">
+                <div class="data-line"></div>
+                <span class="data-label">最低：</span>
+                <span>${latestData.low}</span>
+            </div>
+        </div>
     `;
 }
+
 
 
 // 修改 updateChart 函數

@@ -187,11 +187,53 @@
         #modalTitle {
             margin-bottom: 10px;
             font-size: 2em;
+            letter-spacing: 1.5px;
         }
 
         #stockPrice {
             margin-bottom: 20px;
             line-height: 1.6;
+        }
+
+        /* 新增的最新數據區域 CSS */
+
+        .data-title {
+            margin-left: 3px;
+            padding-bottom: 2px;
+            letter-spacing: 1.5px;
+        }
+
+        .data-container {
+            width: 45%;
+            padding: 15px;
+            background-color: #f2f6f9;
+            border-radius: 10px;
+            display: flex;
+            flex-direction: column;
+            gap: 5px; /* 控制每一行之間的距離 */
+        }
+
+        .data-row {
+            display: flex;
+            justify-content: space-between; /* 保持左右對齊 */
+            gap: 10px; /* 調整左右數據間的距離，默認可能較大 */
+        }
+
+        .data-item {
+            display: flex;
+            align-items: center;
+            gap: 8px; /* 黑線和文字間距 */
+            width: 48%; /* 每個項目占50%寬度，確保兩列排版 */
+        }
+
+        .data-item.single-row {
+            width: 100%; /* 最低：占據整行 */
+        }
+
+        .data-line {
+            width: 2px; /*黑線粗度*/
+            height: 20px;
+            background-color: black;
         }
     </style>
 </body>
