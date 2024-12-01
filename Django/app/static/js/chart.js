@@ -54,8 +54,13 @@ function prepareChartData(stockData) {
 }
 
 function updatePriceDisplay(latestData) {
+    // 取得當天日期
+    const today = new Date();
+    const formattedDate = `${today.getFullYear()}/${(today.getMonth() + 1).toString().padStart(2, '0')}/${today.getDate().toString().padStart(2, '0')}`;
+
+    // 更新數據顯示
     document.getElementById('stockPrice').innerHTML = `
-        <div class="data-title">最新數據：</div>
+        <div class="data-title">最新數據 (${formattedDate})</div>
         <div class="data-container">
             <!-- 第一行 -->
             <div class="data-row">
