@@ -23,7 +23,17 @@
             </nav>
         </header>
         <section class="content">
-            <h1>Smart Pick Portfolio</h1>
+            <div class="title-row">
+                <h1>Smart Pick Portfolio</h1>
+                <!-- 在 Smart Pick Portfolio 標題下方添加 -->
+                <div class="date-selector">
+                    <select id="dateSelect" class="date-dropdown">
+                        <option value="" disabled selected>選擇日期</option>
+                        <!-- JavaScript 會動態填入日期選項 -->
+                    </select>
+                </div>
+            </div>            
+
             <table>
                 <thead>
                     <tr>
@@ -115,6 +125,7 @@
         </div>
     </div>
 
+    
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> <!-- 用於折線圖 -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> <!-- 引入 jQuery -->
     <script src="https://cdn.jsdelivr.net/npm/chartjs-chart-financial"></script>
@@ -122,6 +133,7 @@
     <script src="../static/js/portfolio_init.js"></script>
     <script src="../static/js/stock_data.js"></script>
     <script src="../static/js/chart.js"></script>
+    <script src="../static/js/date_selector.js"></script>
 
     <script>
         // 頁面初始化代碼
@@ -252,6 +264,32 @@
             /*黑線粗度*/
             height: 20px;
             background-color: black;
+        }
+        
+        .date-selector {
+            text-align: left;
+            margin: 20px 0;
+            padding: 0 20px;
+        }
+
+        .date-dropdown {
+            padding: 8px 12px;
+            font-size: 16px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            background-color: white;
+            cursor: pointer;
+            min-width: 150px;
+        }
+
+        .date-dropdown:hover {
+            border-color: #999;
+        }
+
+        .date-dropdown:focus {
+            outline: none;
+            border-color: #666;
+            box-shadow: 0 0 5px rgba(0,0,0,0.1);
         }
     </style>
 </body>
