@@ -168,3 +168,67 @@ def get_portfolio_weights(request):
             'status': 'error',
             'message': str(e)
         }, status=500)
+    
+def get_available_dates(request):
+    try:
+        with connection.cursor() as cursor:
+            cursor.execute("""
+                SELECT DISTINCT date 
+                FROM history_returns
+                ORDER BY date DESC
+            """)
+            rows = cursor.fetchall()
+            
+            # 將日期數據轉換為列表
+            dates = [row[0] for row in rows]
+            
+            return JsonResponse({
+                'status': 'success',
+                'data': dates
+            })
+    except Exception as e:
+        return JsonResponse({
+            'status': 'error',
+            'message': str(e)
+        }, status=500)
+def get_available_data(request, date):
+    try:
+        # 驗證日期格式
+        try:
+            selected_date = dt.strptime(date, '%Y-%m-%d').date()
+        except ValueError:
+            return JsonResponse({
+                'status': 'error',
+                'message': 'Invalid date format. Expected YYYY-MM-DD.'
+            }, status=400)
+
+        # 驗證股票代號是否存在
+        stock_ids = request.GET.get('stock_ids')
+        if not stock_ids:
+            return JsonResponse({
+                'status': 'error',
+                'message': 'Stock IDs parameter is missing or empty.'
+            }, status=400)
+
+        stock_ids = stock_ids.split(',')  # 將字符串分割為列表
+        if not stock_ids:
+            return JsonResponse({
+                'status': 'error',
+                'message': 'No valid stock IDs provided.'
+            }, status=400)
+
+        # 模擬數據處理邏輯（替換為你的真實邏輯）
+        stock_returns = {}
+        for stock_id in stock_ids:
+            # 假設邏輯返回的數據
+            stock_returns[stock_id] = 0.5  # 模擬數據
+
+        return JsonResponse({
+            'status': 'success',
+            'data': stock_returns
+        })
+    except Exception as e:
+        return JsonResponse({
+            'status': 'error',
+            'message': str(e)
+        }, status=500)
