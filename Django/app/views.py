@@ -9,7 +9,8 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from fugle_marketdata import RestClient
-import datetime as dt
+from datetime import datetime as dt
+from datetime import date, timedelta
 
 def main_view(request):
     return render(request, 'main.html')
@@ -120,8 +121,8 @@ class StockDataView(APIView):
             stock_id = request.GET.get('stock_id', '2330')  # 預設值為2330
             
             # 設置日期範圍
-            end_date = dt.date.today()
-            start_date = end_date - dt.timedelta(days=365)
+            end_date = date.today()
+            start_date = end_date - timedelta(days=365)
             
             # 初始化 Fugle client
             key = "Njg1M2VkY2ItZjQ2NC00M2VjLTk5NjMtODFlMjA3YzA2NzdlIDY3NGQ3ZTRmLWZkNDktNGVkNy1iMTkyLTUzZDk4ODY4YzkwMw"
@@ -148,7 +149,7 @@ def get_portfolio_weights(request):
             cursor.execute("""
                 SELECT stock_id, stock_name, weights 
                 FROM portfolio_weights 
-                ORDER BY weights DESC
+                ORDER BY stock_id
             """)
             rows = cursor.fetchall()
             
@@ -191,44 +192,46 @@ def get_available_dates(request):
             'status': 'error',
             'message': str(e)
         }, status=500)
-# def get_available_data(request, date):
-#     try:
-#         # 驗證日期格式
-#         try:
-#             selected_date = dt.strptime(date, '%Y-%m-%d').date()
-#         except ValueError:
-#             return JsonResponse({
-#                 'status': 'error',
-#                 'message': 'Invalid date format. Expected YYYY-MM-DD.'
-#             }, status=400)
+    
+def get_available_data(request, date):
+    try:
+        selected_date = dt.strptime(date, "%Y-%m-%d").strftime("%Y-%m-%d")
+        stock_ids = request.GET.get('stock_ids')
+        
+        if not stock_ids:
+            return JsonResponse({
+                'status': 'error',
+                'message': 'Stock IDs are required'
+            }, status=400)
+        
+        stock_ids = stock_ids.split(',')
+        
+        with connection.cursor() as cursor:
+            # 構建 SQL 查詢
+            placeholders = ','.join(['%s'] * len(stock_ids))
+            query = f"""
+                SELECT stock_id, return
+                FROM stocks_daily_return
+                WHERE date = %s AND stock_id IN ({placeholders})
+            """
+            
+            # 執行查詢
+            cursor.execute(query, [selected_date] + stock_ids)
+            results = cursor.fetchall()
+            
+            # 將結果轉換為字典格式
+            stock_returns = {stock_id: None for stock_id in stock_ids}
+            for stock_id, return_value in results:
+                stock_returns[stock_id] = float(return_value)
+        
+        return JsonResponse({
+            'status': 'success',
+            'data': stock_returns
+        })
+        
+    except Exception as e:
+        return JsonResponse({
+            'status': 'error',
+            'message': str(e)
+        }, status=500)
 
-#         # 驗證股票代號是否存在
-#         stock_ids = request.GET.get('stock_ids')
-#         if not stock_ids:
-#             return JsonResponse({
-#                 'status': 'error',
-#                 'message': 'Stock IDs parameter is missing or empty.'
-#             }, status=400)
-
-#         stock_ids = stock_ids.split(',')  # 將字符串分割為列表
-#         if not stock_ids:
-#             return JsonResponse({
-#                 'status': 'error',
-#                 'message': 'No valid stock IDs provided.'
-#             }, status=400)
-
-#         # 模擬數據處理邏輯（替換為你的真實邏輯）
-#         stock_returns = {}
-#         for stock_id in stock_ids:
-#             # 假設邏輯返回的數據
-#             stock_returns[stock_id] = 0.5  # 模擬數據
-
-#         return JsonResponse({
-#             'status': 'success',
-#             'data': stock_returns
-#         })
-#     except Exception as e:
-#         return JsonResponse({
-#             'status': 'error',
-#             'message': str(e)
-#         }, status=500)

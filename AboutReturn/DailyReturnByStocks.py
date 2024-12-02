@@ -65,7 +65,7 @@ def getReturns(stock_id):
     conn.close()
     
     # 抓取stock_id的數據
-    data = yf.download(f"{stock_id}.TW", start=min_date, end=max_date)
+    data = yf.download(f"{stock_id}.TW", start=min_date, end="2024-10-01")
     
     # 檢查數據是否正確抓取
     if data.empty or 'Close' not in data.columns:

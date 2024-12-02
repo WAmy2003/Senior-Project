@@ -42,33 +42,48 @@ function formatDate(dateString) {
 
 // 根據選擇的日期更新表格
 function updateReturnRates(date) {
-    // fetch(`/api/get_available_data/${date}?stock_ids=2912,2330`)
-    //     .then(response => {
-    //         if (!response.ok) {
-    //             throw new Error(`HTTP error! status: ${response.status}`);
-    //         }
-    //         return response.json();
-    //     })
-    //     .then(result => {
-    //         if (result.status === 'success') {
-    //             const portfolioTable = document.getElementById('portfolioTable');
-    //             const rows = portfolioTable.getElementsByTagName('tr');
+    // 從 portfolio-weights API 取得股票代號
+    fetch('http://localhost:8000/api/portfolio-weights/')
+        .then(response => response.json())
+        .then(data => {
+            if (data.status === 'success') {
+                const stockIds = data.data.stock_ids;
+                
+                // 使用取得的 stock_ids 來呼叫 get_available_data API
+                const queryString = stockIds.join(',');
+                return fetch(`/api/get_available_data/${date}?stock_ids=${queryString}`);
+            } else {
+                throw new Error('Failed to fetch portfolio weights');
+            }
+        })
+        .then(response => response.json())
+        .then(result => {
+            if (result.status === 'success') {
+                // 更新每一列的報酬率
+                const portfolioTable = document.getElementById('portfolioTable');
+                const rows = portfolioTable.getElementsByTagName('tr');
+                
+                for (let row of rows) {
+                    const stockId = row.cells[1]?.textContent.trim();
+                    const returnRate = result.data[stockId];
+                    if (returnRate == null) {
+                        row.cells[3].textContent = `${returnRate}`;
+                    }
+                    else{
+                        const formattedRate = (Number(returnRate.toFixed(4)) * 100).toFixed(2);
+                        row.cells[3].textContent = `${formattedRate}%`;
 
-    //             Array.from(rows).forEach(row => {
-    //                 const stockId = row.cells[1]?.textContent; // 股票代號
-    //                 const returnRateCell = row.cells[3]; // 報酬率
-
-    //                 if (stockId && returnRateCell) {
-    //                     const returnRate = result.data[stockId];
-    //                     returnRateCell.textContent = returnRate !== undefined ? `${returnRate}%` : `-`;
-    //                 }
-    //             });
-    //         } else {
-    //             console.error('API returned an error:', result.message);
-    //         }
-    //     })
-    //     .catch(error => console.error('Error updating return rates:', error));
+                        // 根據報酬率的正負值設置顏色
+                        row.cells[3].style.color = returnRate > 0 ? '#FF3B30' : returnRate < 0 ? '#4CD964' : '';
+                    }
+                }
+            } else {
+                console.error('Failed to update return rates:', result.message);
+            }
+        })
+        .catch(error => console.error('Error updating return rates:', error));
 }
+
 
 
 // 在頁面加載時初始化
