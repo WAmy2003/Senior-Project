@@ -54,9 +54,8 @@ function prepareChartData(stockData) {
 }
 
 function updatePriceDisplay(latestData) {
-    // 取得當天日期
-    const today = new Date();
-    const formattedDate = `${today.getFullYear()}/${(today.getMonth() + 1).toString().padStart(2, '0')}/${today.getDate().toString().padStart(2, '0')}`;
+    // 將 latestData.date 轉換為格式化日期
+    const formattedDate = new Date(latestData.date).toISOString().split('T')[0].replace(/-/g, '/');
 
     // 更新數據顯示
     document.getElementById('stockPrice').innerHTML = `
