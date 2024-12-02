@@ -27,110 +27,153 @@
             </section>
 
             <section class="member">
-                <div class="circle-container">
-                    <div class="circle-item">
-                        <div class="circle">
-                            <img src="path-to-your-image1.jpg" alt="Image 1">
-                        </div>
-                        <p>陳珈盈</p>
+                <!-- 成員1 -->
+                <div class="card-wrapper">
+                    <div class="image-card">
+                        <img src="../static/image/robot.png" alt="成員1">
                     </div>
-                    <div class="circle-item">
-                        <div class="circle">
-                            <img src="path-to-your-image2.jpg" alt="Image 2">
-                        </div>
-                        <p>謝尚均</p>
+                    <div class="info-card">
+                        <h2>陳珈盈</h2>
+                        <p>成員職稱或描述</p>
                     </div>
-                    <div class="circle-item">
-                        <div class="circle">
-                            <img src="path-to-your-image3.jpg" alt="Image 3">
-                        </div>
-                        <p>吳昀宸</p>
+                </div>
+            
+                <!-- 成員2 -->
+                <div class="card-wrapper">
+                    <div class="image-card">
+                        <img src="../static/image/five.png" alt="成員2">
                     </div>
-                    <div class="circle-item">
-                        <div class="circle">
-                            <img src="path-to-your-image4.jpg" alt="Image 4">
-                        </div>
-                        <p>魏嘉瑩</p>
+                    <div class="info-card">
+                        <h2>謝尚均</h2>
+                        <p>成員職稱或描述</p>
+                    </div>
+                </div>
+            
+                <!-- 成員3 -->
+                <div class="card-wrapper">
+                    <div class="image-card">
+                        <img src="../static/image/gpt.png " alt="成員3">
+                    </div>
+                    <div class="info-card">
+                        <h2>吳昀宸</h2>
+                        <p>成員職稱或描述</p>
+                    </div>
+                </div>
+            
+                <!-- 成員4 -->
+                <div class="card-wrapper">
+                    <div class="image-card">
+                        <img src="image4.jpg" alt="成員4">
+                    </div>
+                    <div class="info-card">
+                        <h2>魏嘉瑩</h2>
+                        <p>成員職稱或描述</p>
                     </div>
                 </div>
             </section>
+            
+            
 
             <section class="tech">
                 <h1>開發技術</h1>
                 <div class="skills-container">
-                    <div class="skills-grid">
-                        <div class="skill-card">
-                            <div class="skill-header">後端</div>
-                            <ul>
-                                <li><img src="icons/nodejs.svg" alt="Node.js icon"> vuetify.js</li>
-                                <li><img src="icons/mysql.svg" alt="MySQL icon"> MySQL</li>
-                                <li><img src="icons/gpt.svg" alt="GPT-4 icon"> GPT-4</li>
-                            </ul>
-                        </div>
-                        <div class="skill-card">
-                            <div class="skill-header">前端</div>
-                            <ul>
-                                <li><img src="icons/nextjs.svg" alt="Next.js icon"> ...</li>
-                                <li><img src="icons/tailwind.svg" alt="Tailwind CSS icon"> ...</li>
-                                <li><img src="icons/materialui.svg" alt="Material UI icon"> ...</li>
-                                <li><img src="icons/echarts.svg" alt="Echarts icon"> ...</li>
-                            </ul>
-                        </div>
-                        <div class="skill-card">
-                            <div class="skill-header">UI / UX</div>
-                            <ul>
-                                <li><img src="icons/figma.svg" alt="Figma icon"> ...</li>
-                            </ul>
-                        </div>
-                        <div class="skill-card">
-                            <div class="skill-header">統計分析</div>
-                            <ul>
-                                <li>情緒分析</li>
-                                <li>...</li>
-                                <li>...</li>
-                            </ul>
-                        </div>
+                  <div class="skills-grid">
+                    <div class="skill-card">
+                      <div class="skill-header">後端</div>
+                      <ul>
+                        <li><img src="../static//image/vue.png" alt="Node.js icon"> vuetify.js</li>
+                        <li><img src="../static//image/ms.png" alt="MySQL icon"> MySQL</li>
+                        <li><img src="../static//image/g4.png" alt="GPT-4 icon"> GPT-4</li>
+                      </ul>
                     </div>
+                    <div class="skill-card">
+                      <div class="skill-header">前端</div>
+                      <ul>
+                        <li><img src="../static/image/html.png" alt="Next.js icon"> HTML</li>
+                        <li><img src="../static//image/cs.png" alt="Tailwind CSS icon"> CSS</li>
+                        <li><img src="../static//image/js.png" alt="Material UI icon"> Java Script</li>
+                      </ul>
+                    </div>
+                    <div class="skill-card">
+                      <div class="skill-header">UI / UX</div>
+                      <ul>
+                        <li><img src="../static/image/ai.png" alt="Figma icon"> Adobe Illustrator</li>
+                      </ul>
+                    </div>
+                    <div class="skill-card">
+                      <div class="skill-header">統計分析</div>
+                      <ul>
+                        <li>情緒分析</li>
+                        <li>...</li>
+                        <li>...</li>
+                      </ul>
+                    </div>
+                  </div>
                 </div>
             </section>
 
             <section class="time">
-                <h1>開發時程</h1>
-                <img src="../static/image/timeline.png" alt="甘特圖">
+                <div class="gantt-container">
+                    <h1>開發時程</h1>
+                    <div class="gantt-header">
+                        <div>項目 / 月份</div>
+                        <div>JAN<br>1月</div>
+                        <div>FEB<br>2月</div>
+                        <div>MAR<br>3月</div>
+                        <div>APR<br>4月</div>
+                        <div>MAY<br>5月</div>
+                        <div>JUN<br>6月</div>
+                        <div>JUL<br>7月</div>
+                        <div>SEP<br>9月</div>
+                        <div>OCT<br>10月</div>
+                        <div>NOV<br>11月</div>
+                        <div>DEC<br>12月</div>
+                    </div>
+            
+                    <!-- 進度條 -->
+                    <div class="gantt-row">
+                        <div class="item-title">確立方向、動機</div>
+                        <div class="gantt-bar gantt-bar-1"></div>
+                    </div>
+                    <div class="gantt-row">
+                        <div class="item-title">文獻探討、蒐集方法</div>
+                        <div class="gantt-bar gantt-bar-2"></div>
+                    </div>
+                    <div class="gantt-row">
+                        <div class="item-title">爬蟲、資料清理</div>
+                        <div class="gantt-bar gantt-bar-3"></div>
+                    </div>
+                    <div class="gantt-row">
+                        <div class="item-title">情感分析</div>
+                        <div class="gantt-bar gantt-bar-4"></div>
+                    </div>
+                    <div class="gantt-row">
+                        <div class="item-title">機器學習模型</div>
+                        <div class="gantt-bar gantt-bar-5"></div>
+                    </div>
+                    <div class="gantt-row">
+                        <div class="item-title">前端、後端</div>
+                        <div class="gantt-bar gantt-bar-6"></div>
+                    </div>
+                </div>
             </section>
+            
+            
         </main>
 
         <footer class="footer">
             <div class="footer-content">
                 <div class="footer-column">
                     <h4><a href="main.html">首頁</a></h4>
-                    <ul>
-                        <li><a href="#">TurboJet</a></li>
-                        <li><a href="#">DieselJet</a></li>
-                        <li><a href="#">SportJet</a></li>
-                        <li><a href="#">Yacht Fitment</a></li>
-                    </ul>
                 </div>
                 <div class="footer-column center column">
                     <h4><a href="portfolio.html">投資組合</a></h4>
-                    <ul>
-                        <li><a href="#">Build My Tender</a></li>
-                        <li><a href="#">Contact Us</a></li>
-                    </ul>
                 </div>
                 <div class="footer-column">
                     <h4><a href="analysis.html">績效分析</a></h4>
-                    <ul>
-                        <li><a href="#">Find a Dealer</a></li>
-                        <li><a href="#">Dealer Login</a></li>
-                    </ul>
                 </div>
                 <div class="footer-column">
                     <h4><a href="aboutus.html">關於我們</a></h4>
-                    <ul>
-                        <li><a href="#">Find a Dealer</a></li>
-                        <li><a href="#">Dealer Login</a></li>
-                    </ul>
                 </div>
 
                 <div class="newsletter-signup">

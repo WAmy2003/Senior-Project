@@ -231,7 +231,7 @@ h2 {
 .footer-content {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 20px;
+    gap: 10px;
     max-width: 1200px;
     margin: 0 auto;
     padding-top: 30px;
@@ -246,6 +246,9 @@ h2 {
     flex: 1;
     min-width: 200px;
     text-align: left;
+    margin: 20px auto 0;
+    /* 將整體往下移 */
+    padding-top: 15px;
 }
 
 .center-column {

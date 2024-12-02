@@ -6,57 +6,59 @@
 }
 
 header {
-    height: 85px; /* 固定高度 */
+    height: 85px; /* 固定頁首高度 */
     width: 100%;
-    position: fixed;
+    position: fixed; /* 固定頁首 */
+    top: 0; /* 頁首固定在頂部 */
     background-color: #383130; /* 背景顏色 */
     display: flex; /* 使用 Flex 排版 */
     align-items: center; /* 垂直居中 */
     padding-left: 100px; /* 確保內邊距充足 */
     left: 0;
-    z-index: 100vh; /* 確保在最上層 */
+    z-index: 9999; /* 保證頁首層級高於內容 */
     transition: top 1s ease-in-out; /* 平滑過渡效果 */
     margin: 0;
-    box-sizing: border-box; /*固定頁首文字導覽位置*/
+    box-sizing: border-box; /* 使內邊距不影響總寬度 */
 }
 
 header h1 {
     position: absolute; /* 絕對定位 */
-    left: -9999px; /* 移出視窗以隱藏文字 */
-    visibility: hidden; /* 進一步確保不會顯示 */
+    left: -9999px; /* 移出視窗隱藏文字 */
+    visibility: hidden; /* 隱藏文字 */
 }
 
 header::before {
-    content: ""; /* 偽元素來作為 logo */
+    content: ""; /* 偽元素作為 logo */
     display: block;
-    width: 110px; /* 調整圖片寬度 */
-    height: 80px; /* 調整圖片高度 */
-    background-image: url("../image/icon.png"); /* 替換成正確的路徑 */
+    width: 110px; /* 調整 logo 寬度 */
+    height: 80px; /* 調整 logo 高度 */
+    background-image: url("../image/icon.png"); /* 替換為正確的圖片路徑 */
     background-size: 250% auto; /* 確保圖片完整顯示 */
     background-repeat: no-repeat; /* 不重複 */
     background-position: center 38%; /* 居中 */
     margin-right: 10px; /* 與文字間距 */
 }
 
+/* 滑動顯示與隱藏效果 */
 header.headroom--pinned {
-    transform: translateY(0); /* 滑動顯示 */
+    transform: translateY(0); /* 顯示頁首 */
 }
 
 header.headroom--unpinned {
-    transform: translateY(-100%); /* 滑動隱藏 */
+    transform: translateY(-100%); /* 隱藏頁首 */
 }
 
+/* 頁首導航 */
 nav ul {
     position: absolute;
-    right: 3.5vw;
+    right: 3.5vw; /* 根據視窗寬度調整位置 */
     top: 0;
-    line-height: 85px;
+    line-height: 85px; /* 與頁首高度匹配 */
 }
 
 nav ul li {
     display: inline;
-    margin: 2vw;
-    /* vw指的是相對視窗的比例 */
+    margin: 2vw; /* 設定間距 */
 }
 
 nav ul li a {
@@ -67,9 +69,14 @@ nav ul li a {
 
 nav ul li a:hover {
     text-decoration: underline;
-    /* 鼠標移至目錄文字下方出現底線 */
-    text-underline-offset: 5px;
+    text-underline-offset: 5px; /* 鼠標懸停時底線顯示 */
 }
+
+/* 調整頁面內容間距，避免被固定的頁首遮擋 */
+body {
+    padding-top: 85px; /* 給頁面內容加上頁首高度的上邊距 */
+}
+
 
 .intro {
     text-align: center; /* 置中文字於中間 */
@@ -77,66 +84,105 @@ nav ul li a:hover {
     flex-direction: column;
     justify-content: center; /* 水平置中 */
     align-items: center; /* 垂直置中 */
-    margin-top: 20vh;
+    margin-top: 10vh;
+    width: 100%;
 }
 
 .intro h1 {
-    letter-spacing: 1px;
+    letter-spacing: 3px;
     text-align: center;
     color: 5A717A;
     padding-top: 0;
-    font-size: 2em;
-    color: black;
+    font-size: 2.4em;
+    color: #333a56;
 }
 
 .intro p {
     margin: 0; /* 移除段落的預設外邊距 */
-    font-size: 0.8em; /* 調整字體大小 */
-    line-height: 3em; /* 增加行距 */
-    letter-spacing: 1px;
+    font-size: 1.1em; /* 稍微調整字體大小，避免字形過小 */
+    line-height: 3em; /* 增加行高，避免字形擠在一起 */
+    letter-spacing: 1.5px; /* 微調字母間距，避免字元重疊 */
     color: #8E8C8C;
 }
 
-/* 設定 .circle-container 來讓圓圈水平並列 */
-.circle-container {
-    margin-top: 40px;
-    margin-bottom: 40px;
-    display: flex;
-    justify-content: center;
-    gap: 15vw; /* 設定圓圈之間的間距 */
-    padding: 20px 0;
+
+.member {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* 每行顯示兩個成員卡片 */
+    gap: 40px; /* 縮短左右卡片之間的距離 */
+    max-width: 1200px; /* 調整最大寬度以縮小整體佈局 */
+    margin: 20px auto 40px; /* 調整 margin-top 讓整個 section 向上移動 */
+    padding: 0 40px; /* 保持左右 padding 避免切齊視窗邊緣 */
+    overflow: visible; /* 確保圖片不會被隱藏 */
+    padding-left: 125px;
 }
 
-/* 設定每個圓圈和其文字的樣式 */
-.circle-item {
-    text-align: center; /* 讓文字置中對齊 */
+
+.card-wrapper {
+    position: relative;
+    margin-top: 80px;
+    overflow: visible; /* 讓圖片卡片能夠超出容器 */
 }
 
-/* 設定圓圈樣式 */
-.circle {
-    width: 120px; /* 圓圈寬度 */
-    height: 120px; /* 圓圈高度 */
-    border-radius: 50%; /* 讓容器變成圓形 */
-    overflow: hidden; /* 隱藏溢出的圖片部分 */
-    background-color: #e0e0e0; /* 圓圈背景顏色，可以依需求更改 */
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.image-card {
+    position: absolute;
+    top: -20px; /* 向上凸出 */
+    left: -20px; /* 向左凸出，保持圖片框內的調整 */
+    width: 200px; /* 縮窄圖片卡片的寬度 */
+    height: 210px; /* 增加圖片卡片的高度 */
+    border-radius: 25px 25px 0 25px; /* 調整圓角形狀，依據需求略微修改 */
+    border: 2px solid #e0e0e0;
+    background-color: #ffffff;
+    overflow: hidden; /* 確保圖片不會超出卡片邊界 */
+    z-index: 2;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 增加陰影效果 */
 }
 
-/* 圓圈內圖片的樣式 */
-.circle img {
+.image-card img {
     width: 100%;
     height: 100%;
-    object-fit: cover; /* 讓圖片自動填滿圓圈，保持比例 */
+    object-fit: cover; /* 保持圖片比例且填滿整個框 */
+    border-radius: 25px 25px 0 25px; /* 保持圖片的圓角形狀與卡片一致 */
 }
 
-/* 圓圈下方文字樣式 */
-.circle-item p {
-    margin-top: 10px;
-    font-size: 16px;
-    color: #333; /* 可以根據需求調整文字顏色 */
+
+.info-card {
+    position: relative;
+    background-color: white;
+    border-radius: 15px;
+    border: 2px solid #e0e0e0;
+    padding: 20px; /* 保持 padding 設定，不動整個卡片的寬度 */
+    height: 200px;
+    margin-top: 60px;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: flex-start;
+    width: 450px;
 }
+
+/* 新增此部分專門調整文字的位置 */
+.info-card h2 {
+    position: relative;
+    left: 230px; /* 將名字向右移動 */
+    top: 30px;
+    margin: 0 0 10px 0;
+    font-size: 2em;
+    letter-spacing: 5px;
+    color: #212121;
+}
+
+.info-card p {
+    position: relative;
+    left: 230px; /* 將描述文字向右移動，與名字保持一致 */
+    margin: 0;
+    top: 50px;
+    color: #666;
+    line-height: 1.5;
+}
+
+
 
 
 /*開發技術4張card*/
@@ -148,20 +194,19 @@ nav ul li a:hover {
     flex-direction: column; /* 上下排列標題與卡片容器 */
     align-items: center; /* 讓整體居中 */
     height: auto; /* 自適應內容高度 */
-    margin: 0;
+    margin: 30px 0 0 0; /* 增加 margin-top 來向下移動 */
     padding: 20px 0; /* 增加上下內邊距 */
 }
 
 .tech h1 {
-    font-size: 2em;
+    font-size: 2.3em;
     margin-bottom: 20px; /* 與卡片容器間距 */
-    color: black;
+    color: #333a56;
 }
 
 /* 外部容器設置 */
 .skills-container {
-    padding: 20px;
-    margin-bottom: 1vh;
+    margin-bottom: 80px; /* 增加 margin-bottom 來向下移動 .tech 區域 */
 }
 
 /* 使用 Flexbox 來讓卡片水平排列 */
@@ -202,7 +247,7 @@ nav ul li a:hover {
 .skill-card li {
     display: flex;
     align-items: center;
-    margin-bottom: 8px;
+    margin-bottom: 15px;
 }
 
 .skill-card img {
@@ -234,31 +279,122 @@ nav ul li a:hover {
 
 /*時程*/
 
-.time {
-    text-align: center; /* 文字置中 */
+section.time {
+    margin: 0 auto;
+    padding: 40px 0 80px 0;
+    max-width: 90%;
+    font-family: Arial, sans-serif;
+}
+
+section.time .gantt-container {
     display: flex;
-    flex-direction: column; /* 子項目從上到下排列 */
-    justify-content: flex-start; /* 子項目從容器頂部開始 */
-    align-items: center; /* 水平置中 */
-    padding: 20px 0; /* 增加上下內邊距，避免被遮住 */
-    width: 100%; /* 寬度設為容器的 100% */
-    box-sizing: border-box; /* 包含 padding 在內計算寬度 */
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
 }
 
-.time h1 {
-    letter-spacing: 1px;
-    color: black; /* 修正顏色編碼，加上 `#` */
-    margin: 0 0 50px; /* 與圖片的距離 */
-    font-size: 2em;
+section.time .gantt-container h1 {
+    text-align: left;
+    font-size: 2.3em;
+    margin-bottom: 50px; 
+    color: #333a56;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-.time img {
-    max-width: 80%; /* 圖片最大寬度為容器的 80% */
-    height: auto; /* 保持圖片的比例 */
-    display: block; /* 避免額外空白 */
-    margin: 0 auto; /* 確保水平置中 */
+section.time .gantt-header {
+    display: flex;
+    justify-content: space-evenly; /* 保持月份的排列不變 */
+    width: 100%;
+    margin-bottom: 30px;
+    position: relative;
+    flex-wrap: wrap; /* 自動換行 *
+     z-index: 2; /* 頁首會有較高的 z-index */
 }
 
+section.time .gantt-header div {
+    text-align: center;
+    flex: 0 1 auto; /* 允許自動調整項目的寬度 */
+    font-weight: bold;
+    color: #4a6fa5;
+    position: relative;
+    padding-left: 40px;
+    white-space: nowrap; /* 防止文字換行 */
+}
+
+/* 針對 "項目 / 月份" 這個標題的移動 */
+section.time .gantt-header > div:first-child {
+    text-align: left; /* 將標題對齊到左邊 */
+    position: relative; /* 讓它能夠單獨調整 */
+    left: -55px; /* 向左移動標題 */
+    margin-top: 13px; /* 向下移動 */
+}
+
+/* 設定項目行 */
+section.time .gantt-row {
+    display: flex;
+    position: relative;
+    width: 100%;
+    height: 60px;
+    align-items: center;
+}
+
+section.time .gantt-row:nth-child(odd) {
+    background-color: #f7f8fd;
+}
+
+section.time .gantt-row .item-title {
+    text-align: left;
+    padding-left: 20px;
+    font-weight: bold;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    width: auto;
+}
+
+/* 調整每個進度條 */
+section.time .gantt-bar {
+    position: absolute;
+    top: 50%;
+    height: 28px;
+    background-color: #ff9e9e;
+    border-radius: 14px;
+    transform: translateY(-50%);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    min-width: 5%; /* 最小寬度設置 */
+    max-width: 100%; /* 最大寬度設置 */
+    box-sizing: border-box; /* 防止邊距干擾寬度 */
+}
+
+/* 每個進度條的寬度和位置設置 */
+.gantt-bar-1 {
+    left: 16%;  /* JAN */
+    width: 5%; /* 確定進度條長度 */
+}
+
+.gantt-bar-2 {
+    left: 16%;  /* FEB */
+    width: 20%;
+}
+
+.gantt-bar-3 {
+    left: 32%;  /* MAR */
+    width: 20%;
+}
+
+.gantt-bar-4 {
+    left: 47%;  /* APR */
+    width: 20%;
+}
+
+.gantt-bar-5 {
+    left: 55%;  /* MAY */
+    width: 20%;
+}
+
+.gantt-bar-6 {
+    left: 72%;  /* JUN */
+    width: 20%;
+}
 
 
 /*以下是頁尾設計*/
@@ -272,7 +408,7 @@ nav ul li a:hover {
 .footer-content {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 20px;
+    gap: 10px;
     max-width: 1200px;
     margin: 0 auto;
     padding-top: 30px;
@@ -288,6 +424,9 @@ nav ul li a:hover {
     flex: 1;
     min-width: 200px;
     text-align: left;
+    margin: 20px auto 0;
+    /* 將整體往下移 */
+    padding-top: 15px;
 }
 
 .center-column {
