@@ -1,19 +1,22 @@
 <!DOCTYPE html>
 <html lang="zh-TW">
+
 <head>
     <meta charset="UTF-8">
     <title>專題成果展</title>
     <link rel="stylesheet" href="../static/css/style4.css">
 </head>
+
 <body>
     <div class="container">
         <header>
+            {% load static %}
             <nav>
                 <ul>
-                    <li><a href="main.html">首頁</a></li>
-                    <li><a href="portfolio.html">投資組合</a></li>
-                    <li><a href="analysis.html">績效分析</a></li>
-                    <li><a href="aboutus.html">關於我們</a></li>
+                    <li><a href="{% url 'main' %}">首頁</a></li>
+                    <li><a href="{% url 'portfolio' %}">投資組合</a></li>
+                    <li><a href="{% url 'analysis' %}">績效分析</a></li>
+                    <li><a href="{% url 'aboutus' %}">關於我們</a></li>
                 </ul>
             </nav>
         </header>
@@ -60,7 +63,7 @@
                     <input type="email" placeholder="Email address">
                     <button>SUBSCRIBE</button>
                 </div>
-            </div>    
+            </div>
             <div class="footer-bottom">
                 <p>Copyright © 2024 National Taipei University of Technology. All rights reserved. </p>
             </div>
@@ -72,10 +75,11 @@
     <script>
         // 選取導覽列
         const navbar = document.querySelector("header");
-    
+
         // 初始化 Headroom
         const headroom = new Headroom(navbar);
         headroom.init(); // 啟用 Headroom
-    </script> 
+    </script>
 </body>
+
 </html>

@@ -10,12 +10,13 @@
 <body>
     <div class="container">
         <header>
+            {% load static %}
             <nav>
                 <ul>
-                    <li><a href="main.html">首頁</a></li>
-                    <li><a href="portfolio.html">投資組合</a></li>
-                    <li><a href="analysis.html">績效分析</a></li>
-                    <li><a href="aboutus.html">關於我們</a></li>
+                    <li><a href="{% url 'main' %}">首頁</a></li>
+                    <li><a href="{% url 'portfolio' %}">投資組合</a></li>
+                    <li><a href="{% url 'analysis' %}">績效分析</a></li>
+                    <li><a href="{% url 'aboutus' %}">關於我們</a></li>
                 </ul>
             </nav>
         </header>
@@ -57,39 +58,39 @@
             <section class="tech">
                 <h1>開發技術</h1>
                 <div class="skills-container">
-                  <div class="skills-grid">
-                    <div class="skill-card">
-                      <div class="skill-header">後端</div>
-                      <ul>
-                        <li><img src="icons/nodejs.svg" alt="Node.js icon"> vuetify.js</li>
-                        <li><img src="icons/mysql.svg" alt="MySQL icon"> MySQL</li>
-                        <li><img src="icons/gpt.svg" alt="GPT-4 icon"> GPT-4</li>
-                      </ul>
+                    <div class="skills-grid">
+                        <div class="skill-card">
+                            <div class="skill-header">後端</div>
+                            <ul>
+                                <li><img src="icons/nodejs.svg" alt="Node.js icon"> vuetify.js</li>
+                                <li><img src="icons/mysql.svg" alt="MySQL icon"> MySQL</li>
+                                <li><img src="icons/gpt.svg" alt="GPT-4 icon"> GPT-4</li>
+                            </ul>
+                        </div>
+                        <div class="skill-card">
+                            <div class="skill-header">前端</div>
+                            <ul>
+                                <li><img src="icons/nextjs.svg" alt="Next.js icon"> ...</li>
+                                <li><img src="icons/tailwind.svg" alt="Tailwind CSS icon"> ...</li>
+                                <li><img src="icons/materialui.svg" alt="Material UI icon"> ...</li>
+                                <li><img src="icons/echarts.svg" alt="Echarts icon"> ...</li>
+                            </ul>
+                        </div>
+                        <div class="skill-card">
+                            <div class="skill-header">UI / UX</div>
+                            <ul>
+                                <li><img src="icons/figma.svg" alt="Figma icon"> ...</li>
+                            </ul>
+                        </div>
+                        <div class="skill-card">
+                            <div class="skill-header">統計分析</div>
+                            <ul>
+                                <li>情緒分析</li>
+                                <li>...</li>
+                                <li>...</li>
+                            </ul>
+                        </div>
                     </div>
-                    <div class="skill-card">
-                      <div class="skill-header">前端</div>
-                      <ul>
-                        <li><img src="icons/nextjs.svg" alt="Next.js icon"> ...</li>
-                        <li><img src="icons/tailwind.svg" alt="Tailwind CSS icon"> ...</li>
-                        <li><img src="icons/materialui.svg" alt="Material UI icon"> ...</li>
-                        <li><img src="icons/echarts.svg" alt="Echarts icon"> ...</li>
-                      </ul>
-                    </div>
-                    <div class="skill-card">
-                      <div class="skill-header">UI / UX</div>
-                      <ul>
-                        <li><img src="icons/figma.svg" alt="Figma icon"> ...</li>
-                      </ul>
-                    </div>
-                    <div class="skill-card">
-                      <div class="skill-header">統計分析</div>
-                      <ul>
-                        <li>情緒分析</li>
-                        <li>...</li>
-                        <li>...</li>
-                      </ul>
-                    </div>
-                  </div>
                 </div>
             </section>
 

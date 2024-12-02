@@ -11,12 +11,13 @@
     <div class="container">
         <header>
             <h1>Smart Pick</h1>
+            {% load static %}
             <nav>
                 <ul>
-                    <li><a href="main.html">首頁</a></li>
-                    <li><a href="portfolio.html">投資組合</a></li>
-                    <li><a href="analysis.html">績效分析</a></li>
-                    <li><a href="aboutus.html">關於我們</a></li>
+                    <li><a href="{% url 'main' %}">首頁</a></li>
+                    <li><a href="{% url 'portfolio' %}">投資組合</a></li>
+                    <li><a href="{% url 'analysis' %}">績效分析</a></li>
+                    <li><a href="{% url 'aboutus' %}">關於我們</a></li>
                 </ul>
             </nav>
         </header>

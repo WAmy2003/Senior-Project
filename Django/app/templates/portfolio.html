@@ -12,17 +12,28 @@
     <div class="portfolio-container">
         <header>
             <h1>smart pick</h1>
+            {% load static %}
             <nav>
                 <ul>
-                    <li><a href="main.html">首頁</a></li>
-                    <li><a href="portfolio.html">投資組合</a></li>
-                    <li><a href="analysis.html">績效分析</a></li>
-                    <li><a href="aboutus.html">關於我們</a></li>
+                    <li><a href="{% url 'main' %}">首頁</a></li>
+                    <li><a href="{% url 'portfolio' %}">投資組合</a></li>
+                    <li><a href="{% url 'analysis' %}">績效分析</a></li>
+                    <li><a href="{% url 'aboutus' %}">關於我們</a></li>
                 </ul>
             </nav>
         </header>
         <section class="content">
-            <h1>Smart Pick Portfolio</h1>
+            <div class="title-row">
+                <h1>Smart Pick Portfolio</h1>
+                <!-- 在 Smart Pick Portfolio 標題下方添加 -->
+                <div class="date-selector">
+                    <select id="dateSelect" class="date-dropdown">
+                        <option value="" disabled selected>選擇日期</option>
+                        <!-- JavaScript 會動態填入日期選項 -->
+                    </select>
+                </div>
+            </div>            
+
             <table>
                 <thead>
                     <tr>
@@ -114,6 +125,7 @@
         </div>
     </div>
 
+    
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> <!-- 用於折線圖 -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> <!-- 引入 jQuery -->
     <script src="https://cdn.jsdelivr.net/npm/chartjs-chart-financial"></script>
@@ -121,6 +133,7 @@
     <script src="../static/js/portfolio_init.js"></script>
     <script src="../static/js/stock_data.js"></script>
     <script src="../static/js/chart.js"></script>
+    <script src="../static/js/date_selector.js"></script>
 
     <script>
         // 頁面初始化代碼
@@ -143,7 +156,8 @@
             top: 0;
             width: 100%;
             height: 100%;
-            overflow: hidden; /* 確保沒有水平捲動條 */
+            overflow: hidden;
+            /* 確保沒有水平捲動條 */
             background-color: rgba(0, 0, 0, 0.4);
         }
 
@@ -153,10 +167,14 @@
             margin: 2% auto;
             padding: 20px;
             border: 1px solid #888;
-            width: auto; /* 自適應高度 */
-            max-width: 800px; /* 避免過寬 */
-            max-height: 85vh; /* 避免內容過高超出螢幕 */
-            overflow-y: auto; /* 僅在內容過多時顯示垂直捲動條 */
+            width: auto;
+            /* 自適應高度 */
+            max-width: 800px;
+            /* 避免過寬 */
+            max-height: 85vh;
+            /* 避免內容過高超出螢幕 */
+            overflow-y: auto;
+            /* 僅在內容過多時顯示垂直捲動條 */
             box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
         }
 
@@ -167,19 +185,24 @@
             font-size: 28px;
             font-weight: bold;
             cursor: pointer;
-            background-color: #ddd; /* 添加背景顏色 */
-            width: 35px; /* 設置固定寬度 */
-            height: 35px; /* 設置固定高度，確保為正方形 */
+            background-color: #ddd;
+            /* 添加背景顏色 */
+            width: 35px;
+            /* 設置固定寬度 */
+            height: 35px;
+            /* 設置固定高度，確保為正方形 */
             display: flex;
             align-items: center;
             justify-content: center;
-            border-radius: 4px; /* 可選，圓角設定 */
+            border-radius: 4px;
+            /* 可選，圓角設定 */
             transition: background-color 0.3s;
             box-sizing: border-box;
         }
 
         .close:hover {
-            background-color: #bbb; /* 懸停時顏色變化 */
+            background-color: #bbb;
+            /* 懸停時顏色變化 */
         }
 
 
@@ -210,30 +233,63 @@
             border-radius: 10px;
             display: flex;
             flex-direction: column;
-            gap: 5px; /* 控制每一行之間的距離 */
+            gap: 5px;
+            /* 控制每一行之間的距離 */
         }
 
         .data-row {
             display: flex;
-            justify-content: space-between; /* 保持左右對齊 */
-            gap: 10px; /* 調整左右數據間的距離，默認可能較大 */
+            justify-content: space-between;
+            /* 保持左右對齊 */
+            gap: 10px;
+            /* 調整左右數據間的距離，默認可能較大 */
         }
 
         .data-item {
             display: flex;
             align-items: center;
-            gap: 8px; /* 黑線和文字間距 */
-            width: 48%; /* 每個項目占50%寬度，確保兩列排版 */
+            gap: 8px;
+            /* 黑線和文字間距 */
+            width: 48%;
+            /* 每個項目占50%寬度，確保兩列排版 */
         }
 
         .data-item.single-row {
-            width: 100%; /* 最低：占據整行 */
+            width: 100%;
+            /* 最低：占據整行 */
         }
 
         .data-line {
-            width: 2px; /*黑線粗度*/
+            width: 2px;
+            /*黑線粗度*/
             height: 20px;
             background-color: black;
+        }
+        
+        .date-selector {
+            text-align: left;
+            margin: 20px 0;
+            padding: 0 20px;
+        }
+
+        .date-dropdown {
+            padding: 8px 12px;
+            font-size: 16px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            background-color: white;
+            cursor: pointer;
+            min-width: 150px;
+        }
+
+        .date-dropdown:hover {
+            border-color: #999;
+        }
+
+        .date-dropdown:focus {
+            outline: none;
+            border-color: #666;
+            box-shadow: 0 0 5px rgba(0,0,0,0.1);
         }
     </style>
 </body>
