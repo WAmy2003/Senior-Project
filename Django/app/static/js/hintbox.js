@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', function () {
     tooltip.style.display = 'none';
     document.body.appendChild(tooltip);
 
-    // 當鼠標移到 td 元素上時顯示工具提示
+    // 這個是為了處理顯示鼠標懸停時的欄位標題
     document.querySelectorAll('td').forEach(function (cell) {
         cell.addEventListener('mouseenter', function (event) {
             const columnHeader = event.target.closest('table').querySelectorAll('th')[event.target.cellIndex].textContent;

@@ -53,7 +53,7 @@ function populateTable() {
                 <td onmouseover="showTooltip(event, '公司名稱')" onmouseout="hideTooltip()"> ${company_names[i]}</td>
                 <td onmouseover="showTooltip(event, '股票代號')" onmouseout="hideTooltip()"> ${stock_ids[i]}</td>
                 <td onmouseover="showTooltip(event, '權重')" onmouseout="hideTooltip()"> ${weights[i]}</td>
-                <td onmouseover="showTooltip(event, '報酬率')" onmouseout="hideTooltip()"> — </td>
+                <td onmouseover="showTooltip(event, '個股報酬率')" onmouseout="hideTooltip()"> — </td>
                 <td onmouseover="showTooltip(event, '開盤價')" onmouseout="hideTooltip()"> — </td>
                 <td onmouseover="showTooltip(event, '收盤價')" onmouseout="hideTooltip()"> — </td>
                 <td onmouseover="showTooltip(event, '漲跌')" onmouseout="hideTooltip()"> — </td>
