@@ -3,7 +3,7 @@ function initializeDateSelector() {
     const dateSelect = document.getElementById('dateSelect');
 
     // 從API獲取日期數據
-    fetch('http://localhost:8000/api/get_available_dates')
+    fetch('/api/get_available_dates/')
         .then(response => response.json())
         .then(result => {
             if (result.status === 'success') {
