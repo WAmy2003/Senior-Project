@@ -3,7 +3,7 @@ function initializeDateSelector() {
     const dateSelect = document.getElementById('dateSelect');
 
     // 從API獲取日期數據
-    fetch('/api/get_available_dates/')
+    fetch('http://localhost:8000/api/get_available_dates/')
         .then(response => response.json())
         .then(result => {
             if (result.status === 'success') {
@@ -48,10 +48,10 @@ function updateReturnRates(date) {
         .then(data => {
             if (data.status === 'success') {
                 const stockIds = data.data.stock_ids;
-                
+
                 // 使用取得的 stock_ids 來呼叫 get_available_data API
                 const queryString = stockIds.join(',');
-                return fetch(`/api/get_available_data/${date}?stock_ids=${queryString}`);
+                return fetch(`http://localhost:8000/api/get_available_data/${date}?stock_ids=${queryString}`);
             } else {
                 throw new Error('Failed to fetch portfolio weights');
             }
@@ -62,14 +62,14 @@ function updateReturnRates(date) {
                 // 更新每一列的報酬率
                 const portfolioTable = document.getElementById('portfolioTable');
                 const rows = portfolioTable.getElementsByTagName('tr');
-                
+
                 for (let row of rows) {
                     const stockId = row.cells[1]?.textContent.trim();
                     const returnRate = result.data[stockId];
                     if (returnRate == null) {
                         row.cells[3].textContent = `${returnRate}`;
                     }
-                    else{
+                    else {
                         const formattedRate = (Number(returnRate.toFixed(4)) * 100).toFixed(2);
                         row.cells[3].textContent = `${formattedRate}%`;
 

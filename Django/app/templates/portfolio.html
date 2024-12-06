@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -11,8 +12,8 @@
 <body>
     <div class="portfolio-container">
         <header>
-            <h1>smart pick</h1>
-            {% load static %}
+            <h1>smart pick</h1>  
+            {% load static %}          
             <nav>
                 <ul>
                     <li><a href="{% url 'main' %}">首頁</a></li>
@@ -25,16 +26,11 @@
         <section class="content">
             <h1>Smart Pick Portfolio</h1>
             <!-- 頁面內容中日期選擇區域 -->
-            <div class="date-container">
-                <!-- 固定日期 -->
-                <span class="fixed-date">2024/07/01</span>
-                <!-- 日期區間符號 -->
-                <span class="date-separator">~</span>
-                <!-- 可選日期 -->
-                <div class="selectable-date">
-                  <input type="text" id="endDate" class="datepicker" value="2024/09/30" readonly>
-                  <span class="dropdown-icon">▼</span>
-                </div>
+            <div class="date-selector">
+                <select id="dateSelect" class="date-dropdown">
+                    <option value="" disabled selected>選擇日期</option>
+                    <!-- JavaScript 會動態填入日期選項 -->
+                </select>
             </div>
             <!-- 提示圖標和提示框 -->
             <div class="info-container">
@@ -132,7 +128,6 @@
     <script src="../static/js/stock_data.js"></script>
     <script src="../static/js/chart.js"></script>
     <script src="../static/js/date_selector.js"></script>
-    <script src="../static/js/TimePeriodHintBox.js"></script> <!--用於選取個股報酬率區間-->
 
     <script>
         // 頁面初始化代碼
