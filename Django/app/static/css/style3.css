@@ -255,6 +255,12 @@ body {
     height: 24px;
     margin-right: 10px;
 }
+
+.skill-card:nth-of-type(4) ul li {
+    margin-left: 8px; /* 調整值，讓文字往右移動 */
+  }
+  
+
 /* 響應式設計 */
 @media (max-width: 768px) {
     .skills-container {
