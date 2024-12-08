@@ -54,18 +54,26 @@
                     </div>
                 </div>
         
-                <!-- 右側內容 -->
                 <div class="right-panel">
-                    <div class="chart-wrapper">
-                        <!-- Smart Pick 區塊 -->
-                        <div class="chart-section">
-                            <h3>Smart Pick</h3>
-                            <canvas id="chart-smart-pick-canvas" class="chart"></canvas>
+                    <div class="content-container" id="smart-pick-container">
+                        <div class="section" id="section-smart-pick">
+                            <h3 class="section-title">Smart Pick</h3>
                         </div>
-                        <!-- 0050 區塊 -->
-                        <div class="chart-section">
-                            <h3>0050</h3>
-                            <canvas id="chart-0050-canvas" class="chart"></canvas>
+                        <!-- 用於顯示折線圖的容器 -->
+                        <div class="chart-container" style="position: relative; width: 100%; height: 400px;">
+                            <canvas id="lineChart" width="400" height="200"></canvas>
+                        </div>
+                    </div>
+
+                    <div class="content-container" id="weight-comparison-container" style="display: none;">
+                        <div class="section" id="section-smart-pick-weight">
+                            <h3 class="section-title">Smart Pick - Weight Comparison</h3>
+                            <canvas id="chart-smart-pick" class="chart"></canvas>
+                        </div>
+
+                        <div class="section" id="section-0050-weight">
+                            <h3 class="section-title">0050 - Weight Comparison</h3>
+                            <canvas id="chart-0050" class="chart"></canvas>
                         </div>
                     </div>
                 </div>
@@ -111,6 +119,9 @@
     </script>
 
     <script src="../static/js/ProfitAndLoss.js"></script> <!--all charts-->
+    <script src="../static/js/LineChart.js"></script> <!--Smart Pick 折線圖-->
+    <!-- 引入 Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </body>
 
 </html>
