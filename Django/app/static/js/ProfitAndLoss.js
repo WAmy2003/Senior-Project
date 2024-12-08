@@ -66,6 +66,8 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   };
 
+  updateCharts();  // 初始化圖表
+
   // 計算盈虧
   if (calculateButton) {
     calculateButton.addEventListener("click", () => {

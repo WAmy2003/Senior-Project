@@ -278,21 +278,30 @@ main {
     margin-bottom: 10px;
 }
 
-.chart-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-top: 20px;  /* 距離上方的間距 */
+/* 權重比較區域：分為左右兩個區塊 */
+.content-container2 {
+    display: flex; /* 使用 flex 使 Smart Pick 和 0050 並排 */
+    justify-content: space-between;
+    flex-direction: row;
+    width: 60%;
+    height: 80%;
 }
 
-
+/* 每個區塊的樣式 */
+.section2 {
+    display: flex;
+    flex-direction: column; /* 內部元素（標題、圖表）垂直排列 */
+    justify-content: flex-start;
+    align-items: center;
+    width: 48%; /* 兩個區塊平分寬度 */
+}
+/* 圓餅圖容器 */
 .chart {
-    width: 100%;
-    height: 300px;
+    width: 60%;
+    height: 80px; /* 圓餅圖的高度 */
     border: 1px solid #ccc;
     border-radius: 8px;
 }
-
 
 /*以下是頁尾設計*/
 
