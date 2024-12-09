@@ -15,7 +15,7 @@ document.addEventListener("DOMContentLoaded", () => {
       weightComparisonContainer.style.display = "none";
     } else if (option === "weight") {
       smartPickContainer.style.display = "none";
-      weightComparisonContainer.style.display = "block";
+      weightComparisonContainer.style.display = "flex";
     }
   };
 

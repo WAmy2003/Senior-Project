@@ -1,48 +1,66 @@
-const ctxSmartPick = document.getElementById('chart-smart-pick').getContext('2d');
-const ctx0050 = document.getElementById('chart-0050').getContext('2d');
+// 儲存圖表實例變數
+let smartPickChartInstance = null;
+let chart0050Instance = null;
 
-const smartPickChart = new Chart(ctxSmartPick, {
-    type: 'pie',
+// 初始化 Smart Pick 圓餅圖
+function initializeSmartPickChart() {
+  const ctxSmartPick = document.getElementById("chart-smart-pick").getContext("2d");
+
+  // 如果已有舊圖表實例，先銷毀
+  if (smartPickChartInstance) {
+    smartPickChartInstance.destroy();
+  }
+
+  // 創建新圖表
+  smartPickChartInstance = new Chart(ctxSmartPick, {
+    type: "pie",
     data: {
-        labels: ['A', 'B', 'C'],
-        datasets: [{
-            data: [50, 30, 20],
-            backgroundColor: ['#ff9999','#66b3ff','#99ff99'],
-            borderColor: ['#ff6666','#3399ff','#66ff66'],
-            borderWidth: 1
-        }]
+      labels: ["A", "B", "C"],
+      datasets: [
+        {
+          data: [50, 30, 20],
+          backgroundColor: ["#ff9999", "#66b3ff", "#99ff99"],
+        },
+      ],
     },
     options: {
-        responsive: true,
-        maintainAspectRatio: true, // 保持比例
-        plugins: {
-            legend: {
-                position: 'top',
-            },
-        },
-        aspectRatio: 1, // 圓餅圖保持正方形
-        elements: {
-            arc: {
-                borderWidth: 1,
-            }
-        },
-    }
-});
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: { position: "top" },
+      },
+    },
+  });
+}
 
-const chart0050 = new Chart(ctx0050, {
-    type: 'pie',
+// 初始化 0050 圓餅圖
+function initialize0050Chart() {
+  const ctx0050 = document.getElementById("chart-0050").getContext("2d");
+
+  // 如果已有舊圖表實例，先銷毀
+  if (chart0050Instance) {
+    chart0050Instance.destroy();
+  }
+
+  // 創建新圖表
+  chart0050Instance = new Chart(ctx0050, {
+    type: "pie",
     data: {
-        labels: ['X', 'Y', 'Z'],
-        datasets: [{
-            data: [40, 40, 20],
-            backgroundColor: ['#ff9999','#66b3ff','#99ff99'],
-            borderColor: ['#ff6666','#3399ff','#66ff66'],
-            borderWidth: 1
-        }]
+      labels: ["X", "Y", "Z"],
+      datasets: [
+        {
+          data: [40, 40, 20],
+          backgroundColor: ["#ff9999", "#66b3ff", "#99ff99"],
+        },
+      ],
     },
     options: {
-        responsive: true,
-        maintainAspectRatio: true,
-        aspectRatio: 1,
-    }
-});
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: { position: "top" },
+      },
+    },
+  });
+}
+

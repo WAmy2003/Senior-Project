@@ -120,11 +120,11 @@ main {
 }
 
 .profit-section {
-    height: calc(60% - 10px); /* 占左側高度的 50%，扣除間隙 */
+    height: calc(70% - 10px); /* 增加高度 */
 }
 
 .comparison-section {
-    height: calc(20% - 10px); /* 每個占左側高度的 25%，扣除間隙 */
+    height: calc(15% - 10px); /* 每個區塊減少高度 */
 }
 
 /* 試算盈虧區塊 */
@@ -195,6 +195,10 @@ main {
     display: flex;
     align-items: center;
     gap: 10px;
+}
+
+.left-panel {
+    gap: 10px; /* 減少兩個區塊之間的空隙 */
 }
 
 .radio-btn {
@@ -281,11 +285,24 @@ main {
 /* 權重比較區域：分為左右兩個區塊 */
 .content-container2 {
     display: flex; /* 使用 flex 使 Smart Pick 和 0050 並排 */
-    justify-content: space-between;
-    flex-direction: row;
     width: 60%;
     height: 80%;
 }
+
+/* 專門控制折線圖的 container */
+#smart-pick-container {
+    display: block; /* 顯示折線圖 */
+    width: 100%;
+    height: 100%;
+}
+
+/* 專門控制權重比較的 container */
+#weight-comparison-container {
+    display: flex; /* 顯示圓餅圖並排 */
+    width: 60%;
+    height: 80%;
+}
+
 
 /* 每個區塊的樣式 */
 .section2 {
