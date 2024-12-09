@@ -11,7 +11,7 @@ from rest_framework import status
 from fugle_marketdata import RestClient
 from datetime import datetime as dt
 from datetime import date, timedelta
-from .models import HistoryReturns
+from .models import HistoryReturns, PortfolioWeights, PortfolioWeights0050
 
 def main_view(request):
     return render(request, 'main.html')
@@ -250,3 +250,12 @@ def get_chart_data(request):
     
     return JsonResponse(formatted_data)
 
+def get_smartpick_weights(request):
+    # 從資料庫讀取 Smart Pick 權重資訊
+    data = list(PortfolioWeights.objects.values('stock_id', 'stock_name', 'weights'))
+    return JsonResponse(data, safe=False)
+
+def get_0050_weights(request):
+    # 從資料庫讀取 0050 權重資訊
+    data = list(PortfolioWeights0050.objects.values('stock_id', 'stock_name', 'weights'))
+    return JsonResponse(data, safe=False)

@@ -42,3 +42,19 @@ class HistoryReturns(models.Model):
 
     class Meta:
         db_table = 'history_returns'
+
+class PortfolioWeights(models.Model):
+    stock_id = models.CharField(max_length=10)
+    stock_name = models.CharField(max_length=50)
+    weights = models.FloatField()
+
+    class Meta:
+        db_table = 'portfolio_weights'  # 對應資料表名稱
+
+class PortfolioWeights0050(models.Model):
+    stock_id = models.CharField(max_length=10)
+    stock_name = models.CharField(max_length=50)
+    weights = models.FloatField()
+
+    class Meta:
+        db_table = 'portfolio_weights_0050'  # 對應資料表名稱
