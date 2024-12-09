@@ -285,39 +285,52 @@ main {
 /* 每個區塊的樣式 */
 .section2 {
     display: flex;
-    flex-direction: column; /* 內部元素（標題、圖表）垂直排列 */
+    flex-direction: column; 
     justify-content: space-evenly;
     align-items: center;
-    width: 48%; /* 兩個區塊平分寬度 */
-    margin: 0 20px; /* 添加水平間距 */
+    width: 48%;
+    margin: 0 20px;
 }
 
 /* 權重比較區域：分為左右兩個區塊 */
 .content-container2 {
-    display: flex; /* 使用 flex 排列 Smart Pick 和 0050 */
-    justify-content: center;
+    display: flex;
+    justify-content: space-between;
     width: 90%;
-    justify-content: space-between; /* 添加左右區塊之間的間距 */
 }
 
-/* 圓餅圖容器 */
+/* 圓餅圖容器，響應式設定 */
 .chart {
     width: 80%;
-    height: 60px; /* 圓餅圖的高度 */
-    margin-top: 15px; /* 圖表與標題文字之間的距離 */
+    max-width: 400px; /* 最大寬度 */
+    height: 300px; /* 預設高度 */
+    margin-top: 15px;
     background-color: #f9f9f9;
     border-radius: 5px;
-    padding: 10px;
+    padding: 20px;
+
 }
 
+/* 圓餅圖 Canvas 自適應畫布大小 */
+#chart-smart-pick,
+#chart-0050 {
+    width: 100%;
+    height: auto;
+}
+
+/* 隱藏圖例 */
+.chartjs-legend {
+  display: none !important;
+}
+
+/* 設置標題 */
 .section-title2 {
     margin-top: 4vh;
     font-size: 2.1em;
     margin-bottom: 2vh;
 }
 
-
-
+  
 
 /*以下是頁尾設計*/
 
