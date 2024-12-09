@@ -11,6 +11,7 @@ from rest_framework import status
 from fugle_marketdata import RestClient
 from datetime import datetime as dt
 from datetime import date, timedelta
+from .models import HistoryReturns
 
 def main_view(request):
     return render(request, 'main.html')
@@ -234,4 +235,18 @@ def get_available_data(request, date):
             'status': 'error',
             'message': str(e)
         }, status=500)
+    
+def get_chart_data(request):
+    # 從資料庫中提取數據
+    data = HistoryReturns.objects.all().values('date', 'return_0050', 'return_0000', 'smart_pick')
+    
+    # 格式化數據為前端需要的格式
+    formatted_data = {
+        "labels": [entry['date'] for entry in data],
+        "return_0050": [entry['return_0050'] for entry in data],
+        "return_0000": [entry['return_0000'] for entry in data],
+        "smart_pick": [entry['smart_pick'] for entry in data]
+    }
+    
+    return JsonResponse(formatted_data)
 

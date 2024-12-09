@@ -1,8 +1,42 @@
-// 模擬的假數據，這將顯示在圖表中
-const fakeData = {
-  labels: ['2024-12-01', '2024-12-02', '2024-12-03', '2024-12-04', '2024-12-05'],  // 假設的日期數據
-  data: [12, 15, 10, 17, 25]  // 假設的報酬率數據
-};
+async function fetchAndRenderChart() {
+  try {
+    // 從後端 API 獲取數據
+    const response = await fetch('/api/chart-data/');
+    const chartData = await response.json();
+
+    // 格式化數據
+    const data = {
+      labels: chartData.labels,  // X軸的日期
+      datasets: [
+        {
+          label: '0050 報酬率',
+          data: chartData.return_0050,  // Y軸的 0050 報酬率
+          borderColor: 'rgba(75, 192, 192, 1)', // 折線顏色
+          borderWidth: 2,
+          fill: false
+        },
+        {
+          label: '加權指數 報酬率',
+          data: chartData.return_0000,  // Y軸的 0000 報酬率
+          borderColor: 'rgba(192, 75, 75, 1)', // 折線顏色
+          borderWidth: 2,
+          fill: false
+        },
+        {
+          label: 'Smart Pick 報酬率',
+          data: chartData.smart_pick,  // Y軸的 Smart Pick 報酬率
+          borderColor: 'rgba(75, 75, 192, 1)', // 折線顏色
+          borderWidth: 2,
+          fill: false
+        }
+      ]
+    };
+
+    renderLineChart(data);  // 渲染圖表
+  } catch (error) {
+    console.error('Error fetching chart data:', error);
+  }
+}
 
 // 渲染折線圖的函數
 function renderLineChart(data) {
@@ -11,17 +45,7 @@ function renderLineChart(data) {
   // 使用 Chart.js 來創建折線圖
   new Chart(ctx, {
     type: 'line',
-    data: {
-      labels: data.labels,  // X軸的日期
-      datasets: [{
-        label: '每日報酬率',
-        data: data.data,  // Y軸的報酬率數據
-        borderColor: 'rgba(75, 192, 192, 1)', // 折線顏色
-        borderWidth: 2,
-        fill: false,  // 不填充顏色
-        tension: 0.1  // 控制折線的彎曲度
-      }]
-    },
+    data: data,
     options: {
       responsive: true,
       maintainAspectRatio: false,
@@ -44,6 +68,4 @@ function renderLineChart(data) {
 }
 
 // 假設在頁面加載時自動加載數據
-window.onload = function() {
-  renderLineChart(fakeData);
-};
+window.onload = fetchAndRenderChart;

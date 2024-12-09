@@ -33,3 +33,12 @@ class HistoricalReturn(models.Model):
         verbose_name = _("Historical Return")
         verbose_name_plural = _("Historical Returns")
         ordering = ['-date']  # 根據日期降序排列
+
+class HistoryReturns(models.Model):
+    date = models.DateField()
+    return_0050 = models.FloatField()
+    return_0000 = models.FloatField()
+    smart_pick = models.FloatField()
+
+    class Meta:
+        db_table = 'history_returns'
