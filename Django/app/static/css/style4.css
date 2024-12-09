@@ -282,43 +282,42 @@ main {
     margin-bottom: 10px;
 }
 
-/* 權重比較區域：分為左右兩個區塊 */
-.content-container2 {
-    display: flex; /* 使用 flex 使 Smart Pick 和 0050 並排 */
-    width: 60%;
-    height: 80%;
-}
-
-/* 專門控制折線圖的 container */
-#smart-pick-container {
-    display: block; /* 顯示折線圖 */
-    width: 100%;
-    height: 100%;
-}
-
-/* 專門控制權重比較的 container */
-#weight-comparison-container {
-    display: flex; /* 顯示圓餅圖並排 */
-    width: 60%;
-    height: 80%;
-}
-
-
 /* 每個區塊的樣式 */
 .section2 {
     display: flex;
     flex-direction: column; /* 內部元素（標題、圖表）垂直排列 */
-    justify-content: flex-start;
+    justify-content: space-evenly;
     align-items: center;
     width: 48%; /* 兩個區塊平分寬度 */
+    margin: 0 20px; /* 添加水平間距 */
 }
+
+/* 權重比較區域：分為左右兩個區塊 */
+.content-container2 {
+    display: flex; /* 使用 flex 排列 Smart Pick 和 0050 */
+    justify-content: center;
+    width: 90%;
+    justify-content: space-between; /* 添加左右區塊之間的間距 */
+}
+
 /* 圓餅圖容器 */
 .chart {
-    width: 60%;
-    height: 80px; /* 圓餅圖的高度 */
-    border: 1px solid #ccc;
-    border-radius: 8px;
+    width: 80%;
+    height: 60px; /* 圓餅圖的高度 */
+    margin-top: 15px; /* 圖表與標題文字之間的距離 */
+    background-color: #f9f9f9;
+    border-radius: 5px;
+    padding: 10px;
 }
+
+.section-title2 {
+    margin-top: 4vh;
+    font-size: 2.1em;
+    margin-bottom: 2vh;
+}
+
+
+
 
 /*以下是頁尾設計*/
 
