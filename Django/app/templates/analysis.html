@@ -21,8 +21,66 @@
             </nav>
         </header>
         <main>
-            <h1>專題成果展示</h1>
-            <p>我們的主題是透過自然語言處理和機器學習建立最佳股票投資組合模型...</p>
+            <div class="layout">
+                <!-- 左側內容 -->
+                <div class="left-panel">
+                    <!-- 試算盈虧 -->
+                    <div class="section profit-section">
+                        <h2>試算盈虧</h2>
+                        <div class="divider"></div>
+                            <div class="input-box">
+                                <input id="investment-amount" type="text" placeholder="請輸入投資金額">
+                                <button id="calculate-button">確定</button>
+                            </div>
+                            <div class="result-box">
+                                <span id="profit-result">試算結果</span>
+                            </div>                            
+                    </div>
+        
+                    <!-- 每日 return -->
+                    <div class="section comparison-section">
+                        <div class="radio-btn">
+                            <input type="radio" id="daily-return" name="chart-option" value="return" checked>
+                            <label for="daily-return">每日報酬率</label>
+                        </div>
+                    </div>
+        
+                    <!-- 權重比較 -->
+                    <div class="section comparison-section">
+                        <div class="radio-btn">
+                            <input type="radio" id="weight-comparison" name="chart-option" value="weight">
+                            <label for="weight-comparison">權重比較</label>
+                        </div>
+                    </div>
+                </div>
+        
+                <div class="right-panel">
+                    <div class="content-container" id="smart-pick-container">
+                        <div class="section" id="section-smart-pick">
+                            <h3 class="section-title">Smart Pick</h3>
+                        </div>
+                        <!-- 用於顯示折線圖的容器 -->
+                        <div class="chart-container" style="position: relative; width: 100%; height: 400px;">
+                            <canvas id="lineChart" width="400" height="200"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- 權重比較區域 -->
+                    <div class="content-container2" id="weight-comparison-container">
+                        <!-- Smart Pick -->
+                        <div class="section2" id="section-smart-pick-weight">
+                            <h3 class="section-title">Smart Pick</h3>
+                            <canvas id="chart-smart-pick" class="chart"></canvas>
+                        </div>
+
+                        <!-- 0050 -->
+                        <div class="section2" id="section-0050-weight">
+                            <h3 class="section-title">0050</h3>
+                            <canvas id="chart-0050" class="chart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </main>
 
         <footer class="footer">
@@ -62,6 +120,12 @@
         const headroom = new Headroom(navbar);
         headroom.init(); // 啟用 Headroom
     </script>
+
+    <script src="../static/js/ProfitAndLoss.js"></script> <!--all charts-->
+    <script src="../static/js/LineChart.js"></script> <!--Smart Pick 折線圖-->
+    <!-- 引入 Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="../static/js/Weight.js"></script>
 </body>
 
 </html>

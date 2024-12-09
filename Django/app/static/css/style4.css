@@ -1,8 +1,15 @@
 * {
     margin: 0;
     padding: 0;
-    overflow-x: hidden; /* 防止水平滾動 */
     
+}
+
+html, body {
+    height: 100%; /* 讓整個頁面高度撐滿視窗 */
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    background-color: #f6e7de;
 }
 
 header {
@@ -14,7 +21,7 @@ header {
     align-items: center; /* 垂直居中 */
     padding-left: 100px; /* 確保內邊距充足 */
     left: 0;
-    z-index: 100vh; /* 確保在最上層 */
+    z-index: 10; /* 確保在最上層 */
     transition: top 1s ease-in-out; /* 平滑過渡效果 */
     margin: 0;
     box-sizing: border-box; /*固定頁首文字導覽位置*/
@@ -76,6 +83,241 @@ h1 {
     text-align: center;
     margin-bottom: 20px;
     color: #333a56;
+}
+
+/*main*/
+
+main {
+    margin-top: 18vh;
+    margin-bottom: 9vh;
+    flex: 1; /* 主內容撐開頁首與頁尾之間的空間 */
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* 水平置中內容 */
+    align-items: center; /* 垂直置中內容 */
+    
+} 
+
+  /* 主結構 */
+.layout {
+    display: flex;
+    gap: 20px; /* 左右區塊間隙 */
+    width: 90%;
+}
+
+/* 左側區塊 */
+.left-panel {
+    width: 30%;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+.section {
+    background: white;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 15px;
+}
+
+.profit-section {
+    height: calc(70% - 10px); /* 增加高度 */
+}
+
+.comparison-section {
+    height: calc(15% - 10px); /* 每個區塊減少高度 */
+}
+
+/* 試算盈虧區塊 */
+.profit-section h2 {
+    margin-bottom: 15px;
+    align-items: center ;
+    text-align: center; /* 置中文字 */
+    letter-spacing: 1.5px;
+    color: #191919;
+}
+
+/*盈虧試算下方線*/
+.profit-section .divider {
+    height: 2px;
+    background-color: #ccc;
+    margin-bottom: 5vh;
+}
+
+.input-box {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 5vh;
+    margin-top: 5px;
+}
+
+.input-box input {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 80%;
+    height: 4vh;
+    font-size: 15px;
+    background-color: #f2f6f9;
+}
+
+.input-box button {
+    padding: 10px 20px;
+    border: none;
+    background-color: #007bff;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 20%;
+}
+
+.result-box {
+    width: 100%;
+    height: 50px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #fff;
+    background-color: #f2f6f9;
+}
+
+.error {
+    color: red;
+    font-weight: bold;
+}
+
+
+/* 每日 return 與權重比較 */
+.comparison-section {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.left-panel {
+    gap: 10px; /* 減少兩個區塊之間的空隙 */
+}
+
+.radio-btn {
+    display: flex;
+    align-items: center; /* 垂直置中 */
+    gap: 0px; /* 按鈕和文字之間的間距 */
+    margin-left: 1vw;
+}
+
+.radio-btn label {
+    font-size: 1.5em; /* 根據需要調整字體大小 */
+    line-height: 1; /* 確保文字不會超出按鈕高度 */
+    cursor: pointer; /* 增加指針樣式，提升可點擊性 */
+    margin-left: 3vw;
+    letter-spacing: 2.3px;
+}
+
+/* 針對第二個 label */
+#weight-comparison + label {
+    letter-spacing: 9.7px; /* 自行調整字間距 */
+}
+
+.radio-btn input[type="radio"] {
+    appearance: none;
+    width: 30px;
+    height: 30px;
+    border: 2px solid #ccc;
+    border-radius: 50%;
+    position: relative;
+    outline: none;
+    cursor: pointer;
+}
+
+.radio-btn input[type="radio"]:checked {
+    border-color: #ff6f28;
+}
+
+.radio-btn input[type="radio"]:checked::before {
+    content: ''; /*製造出實心*/
+    width: 15px;
+    height: 15px;
+    background-color: #ff6f28;
+    border-radius: 50%;
+    position: absolute;
+    top: 50%; /* 垂直居中 */
+    left: 50%; /* 水平居中 */
+    transform: translate(-50%, -50%); /* 將圓心校正到正中央 */
+}
+
+/*右邊視窗*/
+.right-panel {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    width: 70%; /* 右側視窗寬度 */
+    height: 72vh; /* 高度為視窗的 90% */
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 15px;
+    padding: 20px;
+    margin-left: 20px;
+}
+
+.content-container {
+    display: none; /* 預設隱藏，根據選擇顯示 */
+    width: 100%;
+    height: 100%;
+}
+
+.section {
+    margin-bottom: 20px;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+}
+
+.section-title {
+    text-align: center;
+    font-size: 1.7em;
+    margin-bottom: 10px;
+}
+
+/* 權重比較區域：分為左右兩個區塊 */
+.content-container2 {
+    display: flex; /* 使用 flex 使 Smart Pick 和 0050 並排 */
+    width: 60%;
+    height: 80%;
+}
+
+/* 專門控制折線圖的 container */
+#smart-pick-container {
+    display: block; /* 顯示折線圖 */
+    width: 100%;
+    height: 100%;
+}
+
+/* 專門控制權重比較的 container */
+#weight-comparison-container {
+    display: flex; /* 顯示圓餅圖並排 */
+    width: 60%;
+    height: 80%;
+}
+
+
+/* 每個區塊的樣式 */
+.section2 {
+    display: flex;
+    flex-direction: column; /* 內部元素（標題、圖表）垂直排列 */
+    justify-content: flex-start;
+    align-items: center;
+    width: 48%; /* 兩個區塊平分寬度 */
+}
+/* 圓餅圖容器 */
+.chart {
+    width: 60%;
+    height: 80px; /* 圓餅圖的高度 */
+    border: 1px solid #ccc;
+    border-radius: 8px;
 }
 
 /*以下是頁尾設計*/
