@@ -252,10 +252,10 @@ def get_chart_data(request):
 
 def get_smartpick_weights(request):
     # 從資料庫讀取 Smart Pick 權重資訊
-    data = list(PortfolioWeights.objects.values('stock_id', 'stock_name', 'weights'))
+    data = list(PortfolioWeights.objects.values('stock_id', 'stock_name', 'weights').order_by('-weights'))
     return JsonResponse(data, safe=False)
 
 def get_0050_weights(request):
     # 從資料庫讀取 0050 權重資訊
-    data = list(PortfolioWeights0050.objects.values('stock_id', 'stock_name', 'weights'))
+    data = list(PortfolioWeights0050.objects.values('stock_id', 'stock_name', 'weights').order_by('-weights'))
     return JsonResponse(data, safe=False)
