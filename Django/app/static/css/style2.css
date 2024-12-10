@@ -152,6 +152,11 @@ nav ul li a:hover {
     margin-left: -8px;
 }
 
+/* 隱藏提示圖標，避免干擾 */
+.info-container.active-hide {
+    visibility: hidden;
+}
+
 /* 提示圖標樣式 */
 .info-icon {
     width: 5%;
