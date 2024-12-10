@@ -160,10 +160,14 @@
             overflow: hidden;
             /* 確保沒有水平捲動條 */
             background-color: rgba(0, 0, 0, 0.4);
+            z-index: 100050; /* 調整為比 Tooltip 更高的值 */
+            padding-top: 3vh;
         }
 
 
         .modal-content {
+            position: relative; /* 設定為 relative 以啟用 z-index */
+            z-index: 100006; /* 確保層級高於其他元素 */
             background-color: #fefefe;
             margin: 2% auto;
             padding: 20px;
@@ -172,7 +176,7 @@
             /* 自適應高度 */
             max-width: 800px;
             /* 避免過寬 */
-            max-height: 85vh;
+            max-height: 80vh;
             /* 避免內容過高超出螢幕 */
             overflow-y: auto;
             /* 僅在內容過多時顯示垂直捲動條 */
