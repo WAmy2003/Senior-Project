@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>專題成果展</title>
+    <title>Smart Pick - 投資組合首選</title>
     <link rel="stylesheet" href="../static/css/style4.css">
 </head>
 
@@ -28,10 +28,17 @@
                     <div class="section profit-section">
                         <h2>試算盈虧</h2>
                         <div class="divider"></div>
+                            <!-- 新增敘述文字和日期選擇框 -->
+                            <div class="date-picker-container">
+                                <label for="start-date" class="date-label">投資起始日：</label>
+                                <input id="start-date" type="date" class="date-picker">
+                            </div>
+
                             <div class="input-box">
                                 <input id="investment-amount" type="text" placeholder="請輸入投資金額">
                                 <button id="calculate-button">確定</button>
                             </div>
+
                             <div class="result-box">
                                 <span id="profit-result">試算結果</span>
                             </div>                            
@@ -120,7 +127,7 @@
         const headroom = new Headroom(navbar);
         headroom.init(); // 啟用 Headroom
     </script>
-
+    <script src="../static/js/FisrtInvestDay.js"></script> <!--選擇投資起始日-->
     <script src="../static/js/ProfitAndLoss.js"></script> <!--all charts-->
     <script src="../static/js/LineChart.js"></script> <!--Smart Pick 折線圖-->
     <!-- 引入 Chart.js -->
