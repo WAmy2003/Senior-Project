@@ -12,6 +12,8 @@ from fugle_marketdata import RestClient
 from datetime import datetime as dt
 from datetime import date, timedelta
 from .models import HistoryReturns, PortfolioWeights, PortfolioWeights0050
+import yfinance as yf
+import pandas as pd
 
 def main_view(request):
     return render(request, 'main.html')
