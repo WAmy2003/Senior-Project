@@ -1,6 +1,6 @@
 from django.urls import path
 from . import views
-from .views import StockDataView
+from .views import StockDataView, calculate_portfolio_profit_loss
 
 urlpatterns = [
     path('', views.main_view, name='main'),
@@ -14,4 +14,5 @@ urlpatterns = [
     path('api/chart-data/', views.get_chart_data, name='get_chart_data'),
     path('api/smartpick-weights/', views.get_smartpick_weights, name='smartpick-weights'),
     path('api/0050-weights/', views.get_0050_weights, name='0050-weights'),
+    path("api/portfolio-profit-loss/", calculate_portfolio_profit_loss, name="portfolio-profit-loss"),
 ]

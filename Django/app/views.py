@@ -261,3 +261,54 @@ def get_0050_weights(request):
     # 從資料庫讀取 0050 權重資訊
     data = list(PortfolioWeights0050.objects.values('stock_id', 'stock_name', 'weights').order_by('-weights'))
     return JsonResponse(data, safe=False)
+
+@csrf_exempt
+def calculate_portfolio_profit_loss(request):
+    if request.method == "POST":
+        try:
+            # 接收前端傳遞的開始投資日與投入金額
+            body = json.loads(request.body)
+            start_date = body.get("start_date")  # 格式：YYYY-MM-DD
+            investment_amount = float(body.get("investment_amount"))  # 投入金額
+
+            # 從資料庫獲取投資組合
+            portfolio = PortfolioWeights.objects.all().values("stock_id", "weights")
+            if not portfolio:
+                return JsonResponse({"error": "No portfolio data available"}, status=400)
+            
+            # 初始化總投資組合價值
+            total_investment = 0
+            total_value_now = 0
+            
+            # 計算每支股票的盈虧
+            for stock in portfolio:
+                stock_id = stock["stock_id"]
+                weight = float(stock["weights"])
+                allocated_amount = investment_amount * weight  # 分配資金
+                
+                # 獲取股票歷史價格
+                ticker = yf.Ticker(f"{stock_id}.TW")  # 假設台股
+                historical_data = ticker.history(start=start_date)
+                if historical_data.empty:
+                    return JsonResponse({"error": f"No data available for stock {stock_id}"}, status=400)
+                
+                # 取得開始日與當前價格
+                start_price = historical_data.iloc[0]["Close"]
+                current_price = historical_data.iloc[-1]["Close"]
+                
+                # 計算現值
+                shares_bought = allocated_amount / start_price  # 購買股數
+                current_value = shares_bought * current_price  # 當前價值
+                
+                # 更新總投資金額與總現值
+                total_investment += allocated_amount
+                total_value_now += current_value
+            
+            # 計算整體投資組合盈虧
+            total_profit_loss = total_value_now - total_investment
+            return JsonResponse({"profit_loss": total_profit_loss})
+        
+        except Exception as e:
+            return JsonResponse({"error": str(e)}, status=500)
+    
+    return JsonResponse({"error": "Invalid request method"}, status=405)
