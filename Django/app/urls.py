@@ -12,4 +12,6 @@ urlpatterns = [
     path('api/get_available_dates/', views.get_available_dates, name='get_available_dates'),
     path('api/get_available_data/<str:date>', views.get_available_data, name='get_available_data'),
     path('api/chart-data/', views.get_chart_data, name='get_chart_data'),
+    path('api/smartpick-weights/', views.get_smartpick_weights, name='smartpick-weights'),
+    path('api/0050-weights/', views.get_0050_weights, name='0050-weights'),
 ]
