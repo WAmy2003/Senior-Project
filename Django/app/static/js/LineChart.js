@@ -11,23 +11,32 @@ async function fetchAndRenderChart() {
         {
           label: '0050 報酬率',
           data: chartData.return_0050,  // Y軸的 0050 報酬率
-          borderColor: 'rgba(75, 192, 192, 1)', // 折線顏色
+          borderColor: 'rgba(206, 202, 198, 1)', // 折線顏色
           borderWidth: 2,
-          fill: false
+          fill: false,
+          pointStyle: 'circle',  // 點的形狀，這裡是圓形
+          pointRadius: 2,         // 點的大小
+          pointBackgroundColor: 'rgba(206, 202, 198, 1)' // 點的顏色
         },
         {
           label: '加權指數 報酬率',
           data: chartData.return_0000,  // Y軸的 0000 報酬率
-          borderColor: 'rgba(192, 75, 75, 1)', // 折線顏色
+          borderColor: 'rgba(100, 96, 101, 1)', // 折線顏色
           borderWidth: 2,
-          fill: false
+          fill: false,
+          pointStyle: 'circle',  // 點的形狀，這裡是圓形
+          pointRadius: 2,         // 點的大小
+          pointBackgroundColor: 'rgba(100, 96, 101, 1)' // 點的顏色
         },
         {
           label: 'Smart Pick 報酬率',
           data: chartData.smart_pick,  // Y軸的 Smart Pick 報酬率
-          borderColor: 'rgba(75, 75, 192, 1)', // 折線顏色
+          borderColor: 'rgba(252, 109, 38, 1)', // 折線顏色
           borderWidth: 2,
-          fill: false
+          fill: false,
+          pointStyle: 'circle',  // 點的形狀，這裡是圓形
+          pointRadius: 2,         // 點的大小
+          pointBackgroundColor: 'rgba(252, 109, 38, 1)' // 點的顏色
         }
       ]
     };

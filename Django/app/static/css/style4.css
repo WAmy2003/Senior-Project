@@ -111,6 +111,7 @@ main {
     display: flex;
     flex-direction: column;
     gap: 20px;
+    height: auto;
 }
 .section {
     background: white;
@@ -152,7 +153,7 @@ main {
 }
 
 .date-label {
-    font-size: 16px;
+    font-size: 1em;
     color: #191919;
     letter-spacing: 1.5px;
     padding-left: 1px;
@@ -280,7 +281,8 @@ main {
     justify-content: center;
     align-items: flex-start;
     width: 70%; /* 右側視窗寬度 */
-    height: 72vh; /* 高度為視窗的 90% */
+    height: auto; 
+    min-height: 72vh;  /* 設置最小高度，避免過小 */
     background-color: white;
     border: 1px solid #ccc;
     border-radius: 15px;
