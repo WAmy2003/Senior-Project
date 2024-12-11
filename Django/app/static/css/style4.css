@@ -310,6 +310,17 @@ main {
     margin-bottom: 10px;
 }
 
+.canvas-container {
+    width: 100%; /* 容器寬度自適應 */
+    height: 100%; /* 容器高度自適應 */
+    max-height: 1200px; /* 可以設定最大高度來控制圖表的最大顯示區域 */
+}
+
+canvas {
+    width: 100% !important; /* 強制讓 canvas 擴展到父容器的寬度 */
+    height: 100% !important; /* 保持圖表的比例，根據寬度調整高度 */
+}
+
 /* 每個區塊的樣式 */
 .section2 {
     display: flex;
