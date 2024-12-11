@@ -72,114 +72,48 @@ nav ul li a:hover {
     text-underline-offset: 5px; /* 鼠標懸停時底線顯示 */
 }
 
-/* 調整頁面內容間距，避免被固定的頁首遮擋 */
+
+/* 頁面其他部分保持現有樣式 */
 body {
-    padding-top: 85px; /* 給頁面內容加上頁首高度的上邊距 */
+    padding-top: 85px; /* 確保頁首不遮擋內容 */
 }
 
-
 .intro {
-    text-align: center; /* 置中文字於中間 */
+    text-align: left; /* 文字靠左對齊 */
     display: flex;
     flex-direction: column;
-    justify-content: center; /* 水平置中 */
-    align-items: center; /* 垂直置中 */
-    margin-top: 10vh;
+    justify-content: flex-start; /* 將內容靠左 */
+    align-items: flex-start; /* 將內容靠左 */
+    padding-top: 30vh;
+    padding-left: 10vw; /* 讓文字偏向視窗左邊，視需求調整 */
     width: 100%;
+    padding-bottom: 30vh;
 }
 
 .intro h1 {
+    padding-bottom: 1vh;
     letter-spacing: 3px;
-    text-align: center;
-    color: 5A717A;
-    padding-top: 0;
-    font-size: 2.4em;
-    color: #333a56;
+    margin: 0; /* 移除多餘的外邊距 */
+    color: black;
+    font-size: 4.6em;
+    font-weight: 600;
+    letter-spacing: 25px;
+    font-family:  Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
 }
 
-.intro p {
-    margin: 0; /* 移除段落的預設外邊距 */
-    font-size: 1.1em; /* 稍微調整字體大小，避免字形過小 */
-    line-height: 3em; /* 增加行高，避免字形擠在一起 */
-    letter-spacing: 1.5px; /* 微調字母間距，避免字元重疊 */
-    color: #8E8C8C;
+.intro .subtitle {
+    margin: 10px 0; /* 增加上下間距 */
+    font-size: 1.2em; /* 字體大小 */
+    color: #191919; /* 字體顏色 */
+    letter-spacing: 4px;
+    font-weight: 600;
 }
 
-
-.member {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr); /* 每行顯示兩個成員卡片 */
-    gap: 40px; /* 縮短左右卡片之間的距離 */
-    max-width: 1200px; /* 調整最大寬度以縮小整體佈局 */
-    margin: 20px auto 40px; /* 調整 margin-top 讓整個 section 向上移動 */
-    padding: 0 40px; /* 保持左右 padding 避免切齊視窗邊緣 */
-    overflow: visible; /* 確保圖片不會被隱藏 */
-    padding-left: 125px;
-}
-
-
-.card-wrapper {
-    position: relative;
-    margin-top: 80px;
-    overflow: visible; /* 讓圖片卡片能夠超出容器 */
-}
-
-.image-card {
-    position: absolute;
-    top: -20px; /* 向上凸出 */
-    left: -20px; /* 向左凸出，保持圖片框內的調整 */
-    width: 200px; /* 縮窄圖片卡片的寬度 */
-    height: 210px; /* 增加圖片卡片的高度 */
-    border-radius: 25px 25px 0 25px; /* 調整圓角形狀，依據需求略微修改 */
-    border: 2px solid #e0e0e0;
-    background-color: #ffffff;
-    overflow: hidden; /* 確保圖片不會超出卡片邊界 */
-    z-index: 2;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 增加陰影效果 */
-}
-
-.image-card img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover; /* 保持圖片比例且填滿整個框 */
-    border-radius: 25px 25px 0 25px; /* 保持圖片的圓角形狀與卡片一致 */
-}
-
-
-.info-card {
-    position: relative;
-    background-color: white;
-    border-radius: 15px;
-    border: 2px solid #e0e0e0;
-    padding: 20px; /* 保持 padding 設定，不動整個卡片的寬度 */
-    height: 200px;
-    margin-top: 60px;
-    z-index: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: start;
-    align-items: flex-start;
-    width: 450px;
-}
-
-/* 新增此部分專門調整文字的位置 */
-.info-card h2 {
-    position: relative;
-    left: 230px; /* 將名字向右移動 */
-    top: 30px;
-    margin: 0 0 10px 0;
-    font-size: 2em;
-    letter-spacing: 5px;
-    color: #212121;
-}
-
-.info-card p {
-    position: relative;
-    left: 230px; /* 將描述文字向右移動，與名字保持一致 */
-    margin: 0;
-    top: 50px;
-    color: #666;
-    line-height: 1.5;
+.intro .members {
+    margin: 10px 0; /* 增加上下間距 */
+    font-size: 1em; /* 字體大小 */
+    color: #3b3b3b; /* 字體顏色 */
+    font-weight: 600;
 }
 
 
@@ -201,7 +135,7 @@ body {
 .tech h1 {
     font-size: 2.3em;
     margin-bottom: 20px; /* 與卡片容器間距 */
-    color: #333a56;
+    color: black;
 }
 
 /* 外部容器設置 */
@@ -261,23 +195,16 @@ body {
   }
   
 
-/* 響應式設計 */
-@media (max-width: 768px) {
-    .skills-container {
-        display: flex; /* 確保響應式佈局 */
-        flex-direction: column; /* 改為垂直排列 */
-        align-items: center;
-    }
-
-    .skill-card {
-        max-width: 100%; /* 改為全寬顯示 */
-        margin-bottom: 20px; /* 增加下方間距 */
+  @media (max-width: 768px) {
+    .skills-grid {
+        grid-template-columns: repeat(2, 1fr); /* 兩列 */
     }
 }
 
+
 @media (max-width: 480px) {
-    .skill-card {
-        max-width: 100%; /* 改為一排一張 */
+    .skills-grid {
+        grid-template-columns: 1fr; /* 單列 */
     }
 }
 
@@ -304,7 +231,7 @@ section.time .gantt-container h1 {
     text-align: left;
     font-size: 2.3em;
     margin-bottom: 50px; 
-    color: #333a56;
+    color: black;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
