@@ -25,7 +25,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
           // 創建新圖表
           smartPickChartInstance = new Chart(ctxSmartPick, {
-            type: "pie",
+            type: "doughnut",
             data: {
               labels: labels,
               datasets: [{
@@ -65,7 +65,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
           // 創建新圖表
           chart0050Instance = new Chart(ctx0050, {
-            type: "pie",
+            type: "doughnut",
             data: {
               labels: labels,
               datasets: [{
