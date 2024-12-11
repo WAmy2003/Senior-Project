@@ -9,26 +9,6 @@ async function fetchAndRenderChart() {
       labels: chartData.labels,  // X軸的日期
       datasets: [
         {
-          label: '0050 報酬率',
-          data: chartData.return_0050,  // Y軸的 0050 報酬率
-          borderColor: 'rgba(206, 202, 198, 1)', // 折線顏色
-          borderWidth: 2,
-          fill: false,
-          pointStyle: 'circle',  // 點的形狀，這裡是圓形
-          pointRadius: 2,         // 點的大小
-          pointBackgroundColor: 'rgba(206, 202, 198, 1)' // 點的顏色
-        },
-        {
-          label: '加權指數 報酬率',
-          data: chartData.return_0000,  // Y軸的 0000 報酬率
-          borderColor: 'rgba(100, 96, 101, 1)', // 折線顏色
-          borderWidth: 2,
-          fill: false,
-          pointStyle: 'circle',  // 點的形狀，這裡是圓形
-          pointRadius: 2,         // 點的大小
-          pointBackgroundColor: 'rgba(100, 96, 101, 1)' // 點的顏色
-        },
-        {
           label: 'Smart Pick 報酬率',
           data: chartData.smart_pick,  // Y軸的 Smart Pick 報酬率
           borderColor: 'rgba(252, 109, 38, 1)', // 折線顏色
@@ -37,6 +17,26 @@ async function fetchAndRenderChart() {
           pointStyle: 'circle',  // 點的形狀，這裡是圓形
           pointRadius: 2,         // 點的大小
           pointBackgroundColor: 'rgba(252, 109, 38, 1)' // 點的顏色
+        },
+        {
+          label: '加權指數 報酬率',
+          data: chartData.return_0000,  // Y軸的 0000 報酬率
+          borderColor: '#bfbdbd', // 折線顏色
+          borderWidth: 2,
+          fill: false,
+          pointStyle: 'circle',  // 點的形狀，這裡是圓形
+          pointRadius: 2,         // 點的大小
+          pointBackgroundColor: '#bfbdbd' // 點的顏色
+        },        
+        {
+          label: '0050 報酬率',
+          data: chartData.return_0050,  // Y軸的 0050 報酬率
+          borderColor: '#bad3e3', // 折線顏色
+          borderWidth: 2,
+          fill: false,
+          pointStyle: 'circle',  // 點的形狀，這裡是圓形
+          pointRadius: 2,         // 點的大小
+          pointBackgroundColor: '#bad3e3' // 點的顏色
         }
       ]
     };

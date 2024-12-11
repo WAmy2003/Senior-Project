@@ -193,7 +193,7 @@ function updateChart(chartData, stockId) {
         const volumeData = validData.map(item => ({
             time: item.time,
             value: item.volume,
-            color: "#cae9fc"
+            color: "rgba(202, 233, 252, 0.3)"
         }));
 
         volumeSeries.setData(volumeData);
