@@ -116,6 +116,21 @@ body {
     font-weight: 600;
 }
 
+.team-image {
+    position: absolute; /* 設定圖片絕對定位 */
+    right: 0; /* 緊貼右側視窗 */
+    top: 45%; /* 垂直居中 */
+    transform: translateY(-50%); /* 修正垂直居中的偏移 */
+    max-width: 48%; /* 限制圖片最大寬度，避免過大 */
+    height: auto; /* 等比例縮放 */
+}
+
+
+.intro-right {
+    flex: 1;
+    display: flex;
+    justify-content: flex-end; /* 貼齊右側 */
+}
 
 
 
