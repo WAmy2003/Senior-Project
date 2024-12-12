@@ -21,7 +21,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (data && data.length > 0) {
           const labels = data.map(item => item.stock_name);
           const weights = data.map(item => item.weights);
-          const colors = generateGradientColors("#0000ff", weights.length); // 顏色梯度
+          const colors = generateGradientColors("#FC6D26", weights.length); // 顏色梯度
 
           // 創建新圖表
           smartPickChartInstance = new Chart(ctxSmartPick, {
@@ -37,7 +37,11 @@ document.addEventListener("DOMContentLoaded", () => {
               responsive: true,
               maintainAspectRatio: true,
               plugins: {
-                legend: { display: false },
+                legend: { display: false},
+                tooltip: {
+                  enabled: false, // 禁用默認提示框
+                  external: (context) => renderCustomTooltip(context), // 使用自定義提示框邏輯
+                },
               },
             },
           });
@@ -61,7 +65,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (data && data.length > 0) {
           const labels = data.map(item => item.stock_name);
           const weights = data.map(item => item.weights);
-          const colors = generateGradientColors("#ff0000", weights.length); // 顏色梯度
+          const colors = generateGradientColors("#bad3e3", weights.length); // 顏色梯度
 
           // 創建新圖表
           chart0050Instance = new Chart(ctx0050, {
@@ -78,6 +82,10 @@ document.addEventListener("DOMContentLoaded", () => {
               maintainAspectRatio: true,
               plugins: {
                 legend: { display: false },
+                tooltip: {
+                  enabled: false, // 禁用默認提示框
+                  external: (context) => renderCustomTooltip(context), // 使用自定義提示框邏輯
+                },
               },
             },
           });
@@ -102,4 +110,46 @@ function generateGradientColors(baseColor, count) {
     colors.push(`${baseColor}${alphaHex}`);
   }
   return colors;
+}
+
+// 自定義提示框邏輯
+function renderCustomTooltip(context) {
+  const tooltipModel = context.tooltip;
+  const chart = context.chart;
+
+  // 如果沒有提示框數據，則返回
+  if (!tooltipModel || !tooltipModel.dataPoints) return;
+
+  // 獲取提示框的數據
+  const dataPoint = tooltipModel.dataPoints[0];
+  const value = dataPoint.raw;
+  const label = dataPoint.label;
+
+  // 獲取甜甜圈中心點位置
+  const { width, height } = chart;
+  const centerX = width / 2;
+  const centerY = height / 2;
+
+  // 在中心顯示提示框數據
+  let tooltipEl = document.getElementById('custom-tooltip');
+  if (!tooltipEl) {
+    tooltipEl = document.createElement('div');
+    tooltipEl.id = 'custom-tooltip';
+    tooltipEl.style.position = 'absolute';
+    tooltipEl.style.pointerEvents = 'none';
+    tooltipEl.style.textAlign = 'center';
+    tooltipEl.style.color = '#000000';
+    tooltipEl.style.fontSize = '16px';
+    tooltipEl.style.fontWeight = 'bold';
+    tooltipEl.style.backgroundColor = 'rgba(255, 255, 255, 0.8)';
+    tooltipEl.style.borderRadius = '5px';
+    tooltipEl.style.padding = '5px';
+    document.body.appendChild(tooltipEl);
+  }
+
+  // 更新內容和位置
+  tooltipEl.innerHTML = `<div>${label}<br>${(value * 100).toFixed(2)}%</div>`;
+  const tooltipRect = tooltipEl.getBoundingClientRect();
+  tooltipEl.style.left = `${chart.canvas.offsetLeft + centerX - tooltipRect.width / 2}px`;
+  tooltipEl.style.top = `${chart.canvas.offsetTop + centerY - tooltipRect.height / 2}px`;
 }
