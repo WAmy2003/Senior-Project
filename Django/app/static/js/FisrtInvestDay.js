@@ -12,9 +12,19 @@ document.addEventListener("DOMContentLoaded", () => {
     const minDate = "2024-07-01";
     startDateInput.setAttribute("min", minDate); 
     startDateInput.value = minDate;// 預設值
+
+    // 清除自訂提示框
+    const clearCustomTooltip = () => {
+      const tooltipEl = document.getElementById("custom-tooltip");
+      if (tooltipEl) {
+          tooltipEl.remove(); // 移除自訂提示框元素
+      }
+  };
   
     // 根據選擇切換內容
     const showContent = (option) => {
+      clearCustomTooltip(); // 切換時清除提示框
+      
         if (option === "return") {
         smartPickContainer.style.display = "block";
         weightComparisonContainer.style.display = "none";

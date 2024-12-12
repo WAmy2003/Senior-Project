@@ -341,20 +341,20 @@ canvas {
 /* 圓餅圖容器，響應式設定 */
 .chart {
     width: 80%;
-    max-width: 400px; /* 最大寬度 */
-    height: 300px; /* 預設高度 */
+    aspect-ratio: 1; /* 固定寬高比為1:1 */
     margin-top: 15px;
     background-color: #FBFBFC;
     border-radius: 5px;
     padding: 20px;
-
+    height: auto;
 }
 
 /* 圓餅圖 Canvas 自適應畫布大小 */
 #chart-smart-pick,
 #chart-0050 {
-    width: 100%;
-    height: auto;
+    width: 100%; /* 適應父容器寬度 */
+    height: 100%; /* 適應父容器高度 */
+    object-fit: contain; /* 確保內容不變形 */
 }
 
 /* 隱藏圖例 */
