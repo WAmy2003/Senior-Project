@@ -4,6 +4,10 @@
     overflow-x: hidden; /* 防止水平滾動 */
     
 }
+body {
+    background-color: #d3bfa833; /* 淺灰色 */
+    /* 或者可以使用其他顏色代碼或顏色名稱 */
+}
 
 header {
     height: 85px; /* 固定高度 */
@@ -75,58 +79,54 @@ nav ul li a:hover {
 
 
 
-.topic {
-
+/* First, create a wrapper for both sections */
+.content-wrapper {
+    display: flex;
+    align-items: center;
     width: 100vw;
-    /* 主容器寬度設為視窗寬度 */
-    max-width: 100vw;
-    /* 最大寬度限制在視窗寬度 */
+    margin-top: 85px; /* To account for fixed header */
     overflow: hidden;
-    /* 防止圖片溢出容器 */
+}
+
+/* Update topic section styles */
+.topic {
+    width: 50%; /* Take up half the width */
+    height: 90vh;
+    overflow: hidden;
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
 .topic img {
-    padding-top: 80px;
+    padding-top: 0; /* Remove top padding since we handled it in wrapper */
     width: 100%;
-    /* 設定圖片寬度為容器的100% */
-    height: auto;
-    /* 高度自適應 */
-    max-height: 90vh;
-    /* 限制最大高度為視窗高度的90% */
+    height: 100%;
     object-fit: cover;
-    /* 保持圖片比例並適應容器 */
-
 }
 
+/* Update question section styles */
 .question {
-    text-align: center;
-    /* 置中文字於中間 */
+    width: 50%; /* Take up half the width */
+    height: 90vh;
     display: flex;
     justify-content: center;
-    /* 水平置中 */
     align-items: center;
-    /* 垂直置中 */
-    height: 40vh;
-    /* 讓整個區塊在頁面中置中 */
+    padding: 2rem;
+    box-sizing: border-box;
 }
 
 .question p {
     margin: 0;
-    /* 移除段落的預設外邊距 */
     font-size: 1.3em;
-    /* 調整字體大小 */
     line-height: 2em;
-    /* 增加行距 */
+    text-align: center;
 }
 
 
 .statement {
-    background-color: antiquewhite;
-    height: 50vh;
-    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("../image/smallback.jpg");
+    background-color: antiquewhite;    
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("../image/back.png");
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
@@ -135,6 +135,7 @@ nav ul li a:hover {
     align-items: center;
     justify-content: center;
     width: 100vw;
+    height: 80vh;
     overflow-x: hidden; /* 防止水平滾動 */
 }
 
