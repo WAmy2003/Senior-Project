@@ -290,6 +290,7 @@ main {
 .right-panel {
     display: flex;
     flex-direction: column;
+    align-items: center;
     gap: 20px;
     width: 100%;
     background-color: white;
@@ -337,7 +338,7 @@ canvas {
     display: flex;
     flex-direction: column; 
     justify-content: space-evenly;
-    align-items: center;
+    text-align: center;
     width: 48%;
     margin: 0 20px;
 }
@@ -346,6 +347,7 @@ canvas {
 .content-container2 {
     display: flex;
     justify-content: space-between;
+    align-items: center; /* 垂直置中 */
     width: 90%;
 }
 
