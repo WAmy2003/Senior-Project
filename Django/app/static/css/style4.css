@@ -418,17 +418,21 @@ canvas {
 }
 
 .button-container {
-    margin: 1rem;
+    margin-top: 1rem;
+    display: flex; /* 使用 Flexbox 讓按鈕水平排列 */
+    justify-content: center; /* 按鈕居中 */
+    gap: 10px; /* 按鈕之間的間距 */
 }
 
 #btn-smartpick, #btn-0050 {
     padding: 10px 20px;
-    margin: 5px;
+    margin: 0; /*移除多於外邊框*/
     border: none;
     background-color: #ddd;
     cursor: pointer;
     font-size: 1rem;
     border-radius: 5px;
+    letter-spacing: 1px;
 }
 
 #btn-smartpick.active, #btn-0050.active {
@@ -442,7 +446,7 @@ canvas {
     justify-content: space-evenly; /* 讓子元素左右分散排列 */
     align-items: center; /* 垂直居中對齊 */
     gap: 20px; /* 每個指標之間的間距 */
-    margin-top: 1rem; /* 與其他區域的間隔 */
+    margin-top: 1.5rem; /* 與其他區域的間隔 */
     width: 100%; /* 填滿父容器寬度 */
     box-sizing: border-box; /* 確保寬度計算包含 padding 和 border */
 }
