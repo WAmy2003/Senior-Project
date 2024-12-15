@@ -354,3 +354,9 @@ tbody tr:hover {
     color: #d1d1d1;
     text-decoration: none;
 }
+
+.footer-bottom .alert {
+    margin-bottom: 10px;
+    letter-spacing: 1px;
+    font-size: 12px;
+}
