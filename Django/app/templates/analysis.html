@@ -24,6 +24,22 @@
             <div class="layout">
                 <!-- 左側內容 -->
                 <div class="left-panel">
+                    <!-- 每日 return -->
+                    <div class="section comparison-section">
+                        <div class="radio-btn">
+                            <input type="radio" id="daily-return" name="chart-option" value="return" checked>
+                            <label for="daily-return">每日報酬率</label>
+                        </div>
+                    </div>
+
+                    <!-- 權重比較 -->
+                    <div class="section comparison-section">
+                        <div class="radio-btn">
+                            <input type="radio" id="weight-comparison" name="chart-option" value="weight">
+                            <label for="weight-comparison">權重比較</label>
+                        </div>
+                    </div>
+
                     <!-- 試算盈虧 -->
                     <div class="section profit-section">
                         <h2>試算盈虧</h2>
@@ -43,50 +59,61 @@
                             <span id="profit-result">試算結果</span>
                         </div>
                     </div>
+                </div>
 
-                    <!-- 每日 return -->
-                    <div class="section comparison-section">
-                        <div class="radio-btn">
-                            <input type="radio" id="daily-return" name="chart-option" value="return" checked>
-                            <label for="daily-return">每日報酬率</label>
+                <div class="main-container">
+                    <!-- 上方區塊：折線圖和權重比較 -->
+                    <div class="right-panel">
+                        <div class="content-container" id="smart-pick-container">
+                            <div class="section" id="section-smart-pick">
+                                <h3 class="section-title">投資組合</h3>
+                            </div>
+                            <!-- 折線圖容器 -->
+                            <div class="chart-container" style="position: relative; width: 100%;">
+                                <canvas id="lineChart"></canvas>
+                            </div>
+                        </div>
+                        <!-- 權重比較區域 -->
+                        <div class="content-container2" id="weight-comparison-container">
+                            <div class="section2" id="section-smart-pick-weight">
+                                <h3 class="section-title2">Smart Pick</h3>
+                                <canvas id="chart-smart-pick" class="chart"></canvas>
+                            </div>
+                            <div class="section2" id="section-0050-weight">
+                                <h3 class="section-title2">元大台灣50</h3>
+                                <canvas id="chart-0050" class="chart"></canvas>
+                            </div>
                         </div>
                     </div>
-
-                    <!-- 權重比較 -->
-                    <div class="section comparison-section">
-                        <div class="radio-btn">
-                            <input type="radio" id="weight-comparison" name="chart-option" value="weight">
-                            <label for="weight-comparison">權重比較</label>
+                
+                    <!-- 下方區塊：績效指標 -->
+                    <div class="right-panel-down">
+                        <div class="performance-container">
+                            <div class="performance-header">
+                                <div class="performance-tag">績效指標</div>
+                            </div>
+                            <div class="button-container">
+                                <button id="btn-smartpick" class="active">Smart Pick</button>
+                                <button id="btn-0050">元大台灣0050</button>
+                            </div>
+                            <section class="performance-metrics">
+                                <div class="metric">
+                                    <h2>年化報酬率</h2>
+                                    <p id="return-rate">-</p>
+                                </div>
+                                <div class="metric">
+                                    <h2>年化波動率</h2>
+                                    <p id="volatility-rate">-</p>
+                                </div>
+                                <div class="metric">
+                                    <h2>夏普比率</h2>
+                                    <p id="sharpe-ratio">-</p>
+                                </div>
+                            </section>
                         </div>
                     </div>
                 </div>
-
-                <div class="right-panel">
-                    <div class="content-container" id="smart-pick-container">
-                        <div class="section" id="section-smart-pick">
-                            <h3 class="section-title">Smart Pick</h3>
-                        </div>
-                        <!-- 用於顯示折線圖的容器 -->
-                        <div class="chart-container" style="position: relative; width: 100%">
-                            <canvas id="lineChart"></canvas>
-                        </div>
-                    </div>
-
-                    <!-- 權重比較區域 -->
-                    <div class="content-container2" id="weight-comparison-container">
-                        <!-- Smart Pick -->
-                        <div class="section2" id="section-smart-pick-weight">
-                            <h3 class="section-title2">Smart Pick</h3>
-                            <canvas id="chart-smart-pick" class="chart"></canvas>
-                        </div>
-
-                        <!-- 0050 -->
-                        <div class="section2" id="section-0050-weight">
-                            <h3 class="section-title2">元大台灣50</h3>
-                            <canvas id="chart-0050" class="chart"></canvas>
-                        </div>
-                    </div>
-                </div>
+                
             </div>
         </main>
 
@@ -128,7 +155,8 @@
         headroom.init(); // 啟用 Headroom
     </script>
     <script src="../static/js/FisrtInvestDay.js"></script> <!--選擇投資起始日-->
-    <script src="../static/js/LineChart.js"></script> <!--Smart Pick 折線圖-->
+    <script src="../static/js/LineChart.js"></script> <!--折線圖-->
+    <script src="../static/js/toggleIndex.js"></script> <!--折線圖下方選擇指標按鈕-->
     <!-- 引入 Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="../static/js/Weight.js"></script>
