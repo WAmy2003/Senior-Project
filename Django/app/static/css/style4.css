@@ -308,19 +308,6 @@ main {
     height: 100%;
 }
 
-.section {
-    margin-bottom: 20px;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    background-color: #f9f9f9;
-}
-
-.section-title {
-    text-align: center;
-    font-size: 1.7em;
-    margin-bottom: 10px;
-    letter-spacing: 2px;
-}
 
 .canvas-container {
     width: 100%; /* 容器寬度自適應 */
