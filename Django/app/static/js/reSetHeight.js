@@ -19,3 +19,10 @@ function adjustLeftPanelHeight() {
 // 監聽視窗調整事件，確保即時調整高度
 window.addEventListener('resize', adjustLeftPanelHeight);
 document.addEventListener('DOMContentLoaded', adjustLeftPanelHeight);
+
+document.addEventListener('DOMContentLoaded', () => {
+    adjustLeftPanelHeight();
+
+    // 等待其他內容渲染完畢後再次計算高度
+    setTimeout(adjustLeftPanelHeight, 100); 
+});
