@@ -274,7 +274,7 @@ section.time .gantt-header div {
 section.time .gantt-header > div:first-child {
     text-align: left; /* 將標題對齊到左邊 */
     position: relative; /* 讓它能夠單獨調整 */
-    left: -55px; /* 向左移動標題 */
+    left: -45px; /* 向左移動標題 */
     margin-top: 13px; /* 向下移動 */
 }
 
@@ -315,33 +315,33 @@ section.time .gantt-bar {
 
 /* 每個進度條的寬度和位置設置 */
 .gantt-bar-1 {
-    left: 16%;  /* JAN */
+    left: 15%;  /* JAN */
     width: 5%; /* 確定進度條長度 */
 }
 
 .gantt-bar-2 {
-    left: 16%;  /* FEB */
+    left: 15%;  /* FEB */
     width: 20%;
 }
 
 .gantt-bar-3 {
-    left: 32%;  /* MAR */
+    left: 30%;  /* MAR */
     width: 20%;
 }
 
 .gantt-bar-4 {
-    left: 47%;  /* APR */
+    left: 45%;  /* APR */
     width: 20%;
 }
 
 .gantt-bar-5 {
-    left: 55%;  /* MAY */
-    width: 20%;
+    left: 52%;  /* MAY */
+    width: 25%;
 }
 
 .gantt-bar-6 {
-    left: 72%;  /* JUN */
-    width: 26%;
+    left: 74%;  /* JUN */
+    width: 25%;
 }
 
 
